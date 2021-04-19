@@ -10,7 +10,6 @@ import rocket3 from "./images/rocket-3.png";
 function Rockets() {
   const [rocket, setRocket] = useState([]);
   const [rocketSelected, setRocketSelected] = useState([])
-  const [checked, setChecked] = useState([false,false,false,false]);
 
   useEffect(() => {
     axios({
@@ -42,18 +41,21 @@ function Rockets() {
         console.log(error);
       });
   }, []);
+   
+  const maxSelectionReach = rocketSelected.length === 3;
 
   const handleRocketSelected = (value) => {
-    
-    if (rocketSelected.length <= 3 ) {
-      setRocketSelected([...rocketSelected,value]);
-      console.log('nope');
+     
+    if (maxSelectionReach) {
+      alert("you have selected 3 rockets")
     }
+     setRocketSelected([...rocketSelected,value]);
   };
 
+
   const rocketSelectionSubmit = () => {
-    firebase.database().ref("playerOne").child("rockets").set({
-      rocketSelectedOne: rocketSelected,
+    firebase.database().ref("playerOne").update({
+      rocketSelected: rocketSelected,
     });
   }
 
@@ -62,11 +64,12 @@ function Rockets() {
       <h3>Choose Three Rockets as your game pieces </h3>
       <form className="style" className="grid-container">
         {rocket.map((singleRocket, index) => {
+
           return (
             <div key={index} className="flex">
               <div>
-                <input
-                  disabled
+                <input 
+                  disabled = {maxSelectionReach}
                   type="checkbox"
                   id={singleRocket.rocket_id}
                   name={singleRocket.rocket_id}

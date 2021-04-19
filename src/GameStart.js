@@ -39,11 +39,6 @@ function GameStart(props) {
       .set({
         name: player,
         token: token,
-        rockets: {
-          rocketSelectionOne: "one",
-          rocketSelectionTwo: "two",
-          rocketSelectionThree: "three",
-        },
       });
   };
   //captures text input for user name
