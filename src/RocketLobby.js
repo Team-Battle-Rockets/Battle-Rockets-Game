@@ -9,6 +9,8 @@ import rocket3 from "./images/rocket-3.png";
 
 function Rockets() {
   const [rocket, setRocket] = useState([]);
+  const [rocketSelected, setRocketSelected] = useState([])
+  const [checked, setChecked] = useState([false,false,false,false]);
 
   useEffect(() => {
     axios({
@@ -40,11 +42,20 @@ function Rockets() {
         console.log(error);
       });
   }, []);
-  const handleRocketSelected = () => {
-    firebase.database().ref("playerOne").child("rockets").set({
-      rocketSelectedOne: "I'm rocket one",
-    });
+
+  const handleRocketSelected = (value) => {
+    
+    if (rocketSelected.length <= 3 ) {
+      setRocketSelected([...rocketSelected,value]);
+      console.log('nope');
+    }
   };
+
+  const rocketSelectionSubmit = () => {
+    firebase.database().ref("playerOne").child("rockets").set({
+      rocketSelectedOne: rocketSelected,
+    });
+  }
 
   return (
     <div className="wrapper">
@@ -55,13 +66,15 @@ function Rockets() {
             <div key={index} className="flex">
               <div>
                 <input
+                  disabled
                   type="checkbox"
                   id={singleRocket.rocket_id}
                   name={singleRocket.rocket_id}
-                  onClick={handleRocketSelected}
+                  onClick={ ()=> {
+                    handleRocketSelected(singleRocket.rocket_name)
+                  }}
                 />
               </div>
-
               <div>
                 <img
                   className="rocket1"
@@ -85,7 +98,7 @@ function Rockets() {
             </div>
           );
         })}
-        <input type="submit" value="You're ready to join" />
+        <input type="submit" value="You're ready to join" onClick={rocketSelectionSubmit} />
       </form>
     </div>
   );
