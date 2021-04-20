@@ -3,24 +3,45 @@ import firebase from "./firebase";
 import "./App.css";
 import WinPopUp from "./WinPopUp";
 
-function GameBoard() {
+function GameBoard({data, localToken}) {
+
+  const [whichPlayer, setWhichPlayer] = useState("");
+  const [rocketSelections, setRocketSelections] = useState([]);
+
+  useEffect(() => {
+    if (localToken) {
+      const playerOne = data.playerOne.token === localToken;
+      const playerTwo = data.playerTwo.token === localToken;
+      if (playerOne) {
+        setWhichPlayer("playerOne");
+        setRocketSelections(data.playerOne.rocketSelected)
+      }
+      if (playerTwo) {
+        setWhichPlayer("playerTwo");
+        setRocketSelections(data.playerTwo.rocketSelected)
+      }
+    }
+
+  }, [data, localToken]);
+
+  console.log(whichPlayer);
+  console.log(rocketSelections);
+
   // since the game board is 7x7, this variable will determine the vertical space occupied by a rocket if it is rotated vertically.
   const width = 7;
 
   // setting properties for each rocket as an object inside an array
-  const rocketArray = [
+  const mainArray = [
     {
-      name: "R1",
+      name: "Falcon 1",
       size: 2,
       directions: [
-        // horizontal, because it's only one square wide
         [0, 1],
-        // vertical, because it jumps every seven spots in the array
         [0, width],
       ],
     },
     {
-      name: "R2",
+      name: "Falcon 2",
       size: 3,
       directions: [
         [0, 1, 2],
@@ -28,11 +49,19 @@ function GameBoard() {
       ],
     },
     {
-      name: "R3",
-      size: 3,
+      name: "Falcon Heavy",
+      size: 4,
       directions: [
         [0, 1, 2],
-        [0, width, width * 2],
+        [0, width, width * 2, width * 3],
+      ],
+    },
+    {
+      name: "Starship",
+      size: 4,
+      directions: [
+        [0, 1, 2],
+        [0, width, width * 2, width * 3],
       ],
     },
   ];
@@ -142,7 +171,7 @@ function GameBoard() {
     ],
   };
 
-  let score = rocketArray[0].size + rocketArray[1].size + rocketArray[2].size;
+  let score = 10;
   // initializing stateful variables that will be necessary for game logic, including the player board, and the mirror of the opponent's board
   const [boardPlayerOne, setBoardPlayerOne] = useState(
     gameBoards.playerOneBoard
@@ -156,6 +185,7 @@ function GameBoard() {
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
+    const rocketArray = [];
     // this set up an object to pass to the database that will hold either the player one board array or the player two board array.
     const gameLogic = {};
     // this function is used to randomly rotate rockets and place them randomly on the gameboard, and in the gameboard array.
@@ -164,6 +194,7 @@ function GameBoard() {
         gameBoard = gameBoard.playerOneBoard;
         gameLogic.playerOneGrid = gameBoard;
         gameLogic.playerOneScore = score;
+        
       }
       if (player === "playerTwoBoard") {
         gameBoard = gameBoard.playerTwoBoard;
@@ -215,19 +246,19 @@ function GameBoard() {
       } else placeRockets(rocket, gameBoard);
     };
     // this function is called three times per player to place each rocket into their respective gameboard array.
-    placeRockets(rocketArray[0], gameBoards, "playerOneBoard");
-    placeRockets(rocketArray[1], gameBoards, "playerOneBoard");
-    placeRockets(rocketArray[2], gameBoards, "playerOneBoard");
-    placeRockets(rocketArray[0], gameBoards, "playerTwoBoard");
-    placeRockets(rocketArray[1], gameBoards, "playerTwoBoard");
-    placeRockets(rocketArray[2], gameBoards, "playerTwoBoard");
-    const dbRef = firebase.database().ref();
-    dbRef.on("value", (data) => {
-      setBoardPlayerOne(data.val().playerOneGrid);
-      setBoardPlayerTwo(data.val().playerTwoGrid);
-      setPlayerOneScore(data.val().playerOneScore);
-      setPlayerOneScore(data.val().playerTwoScore);
-    });
+    // placeRockets(rocketArray[0], gameBoards, "playerOneBoard");
+    // placeRockets(rocketArray[1], gameBoards, "playerOneBoard");
+    // placeRockets(rocketArray[2], gameBoards, "playerOneBoard");
+    // placeRockets(rocketArray[0], gameBoards, "playerTwoBoard");
+    // placeRockets(rocketArray[1], gameBoards, "playerTwoBoard");
+    // placeRockets(rocketArray[2], gameBoards, "playerTwoBoard");
+    // const dbRef = firebase.database().ref();
+    // dbRef.on("value", (data) => {
+    //   setBoardPlayerOne(data.val().playerOneGrid);
+    //   setBoardPlayerTwo(data.val().playerTwoGrid);
+    //   setPlayerOneScore(data.val().playerOneScore);
+    //   setPlayerOneScore(data.val().playerTwoScore);
+    // });
   }, []);
 
   // this useEffect takes the values of the player one and player two arrays that are in firebase, and uses them to set state for both player boards. They need to be in firebase first in order to enable two-player play, because they'll both be working from the same DB.
