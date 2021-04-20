@@ -162,7 +162,7 @@ function Rockets({ data, localToken }) {
           </>
         )}
 
-        {/* {whichPlayer === "playerTwo" && maxSelectionReach && (
+        {whichPlayer === "playerTwo" && maxSelectionReach && (
           <>
             <button
               type="submit"
@@ -172,7 +172,7 @@ function Rockets({ data, localToken }) {
               <Link to="/GameBoardTwo">Enter the Game Player Two</Link>
             </button>
           </>
-        )} */}
+        )}
       </form>
     </div>
   );

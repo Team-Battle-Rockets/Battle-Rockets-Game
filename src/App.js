@@ -88,12 +88,9 @@ function App() {
         <Route
           exact
           path="/GameBoardTwo"
-          component={() => {
-            <GameBoard
-              data={data}
-              localToken={localAssignedToken}
-            />;
-          }}
+          component={() => (
+            <GameBoard data={data} localToken={localAssignedToken} />
+          )}
         />
       </div>
     </Router>

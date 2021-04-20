@@ -27,44 +27,6 @@ function GameBoard({data, localToken}) {
   console.log(whichPlayer);
   console.log(rocketSelections);
 
-  // since the game board is 7x7, this variable will determine the vertical space occupied by a rocket if it is rotated vertically.
-  const width = 7;
-
-  // setting properties for each rocket as an object inside an array
-  const mainArray = [
-    {
-      name: "Falcon 1",
-      size: 2,
-      directions: [
-        [0, 1],
-        [0, width],
-      ],
-    },
-    {
-      name: "Falcon 2",
-      size: 3,
-      directions: [
-        [0, 1, 2],
-        [0, width, width * 2],
-      ],
-    },
-    {
-      name: "Falcon Heavy",
-      size: 4,
-      directions: [
-        [0, 1, 2],
-        [0, width, width * 2, width * 3],
-      ],
-    },
-    {
-      name: "Starship",
-      size: 4,
-      directions: [
-        [0, 1, 2],
-        [0, width, width * 2, width * 3],
-      ],
-    },
-  ];
   // initializing gameboard as an object with two arrays to use for game logic, and also to pass to firebase for two player integration
   const gameBoards = {
     playerOneBoard: [
@@ -185,7 +147,6 @@ function GameBoard({data, localToken}) {
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
-    const rocketArray = [];
     // this set up an object to pass to the database that will hold either the player one board array or the player two board array.
     const gameLogic = {};
     // this function is used to randomly rotate rockets and place them randomly on the gameboard, and in the gameboard array.
@@ -227,11 +188,11 @@ function GameBoard({data, localToken}) {
       );
       // if current rocket is at the 6th spot in the array row (the far right edge), it can still register, but if it's higher that that it can't be placed on the board
       const atRightEdge = currentDirection.some(
-        (index) => (randomStart + index) % width === width - 1
+        (index) => (randomStart + index) % 7 === 6
       );
       // if current rocket is at the 1st spot in the array row (row 0, the far left edge), it can still register, but if it's lower than that it can't be placed on the board
       const atLeftEdge = currentDirection.some(
-        (index) => (randomStart + index) % width === 0
+        (index) => (randomStart + index) % 7 === 0
       );
       // if the rocket position meets all these conditions by not being in a taken space, and not being over the left or right edge of the board, it can be placed on the board
       if (!isTaken && !atRightEdge && !atLeftEdge) {
@@ -382,7 +343,7 @@ function GameBoard({data, localToken}) {
             return (
               <button
                 key={index}
-                onClick={(event) => handleClick(event, index, "playerOne")}
+                onClick={(event) => handleClick(event, index, whichPlayer)}
                 value={boardPlayerTwo[index]}
                 disabled={playerTurn}
               >
@@ -399,7 +360,7 @@ function GameBoard({data, localToken}) {
             return (
               <button
                 key={index}
-                onClick={(event) => handleClick(event, index, "playerTwo")}
+                onClick={(event) => handleClick(event, index, whichPlayer)}
                 value={boardPlayerOne[index]}
                 disabled={playerTurn}
               >
