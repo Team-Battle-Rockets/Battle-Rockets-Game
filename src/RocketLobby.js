@@ -72,11 +72,11 @@ function Rockets({ data, localToken }) {
   };
 
   //onClick will push the rockets selected to firebase (depending on user of course)
-  const rocketSelectionSubmit = () => {
-    firebase.database().ref(whichPlayer).update({
-      rocketSelected: rocketSelected,
-    });
-  };
+  // const rocketSelectionSubmit = () => {
+  //   firebase.database().ref(whichPlayer).update({
+  //     rocketSelected: rocketSelected,
+  //   });
+  // };
 
 
   const rocketSelectionSubmit = () => {
@@ -88,7 +88,7 @@ function Rockets({ data, localToken }) {
   return (
     <div className="wrapper">
       <h2>Welcome, {userName}!</h2>
-      <h3>Choose Three Rockets as your game pieces </h3>
+      <h3>Choose 3 Rockets as your game pieces </h3>
 
       <form className="style grid-container">
         {rocket.map((singleRocket, index) => {
@@ -114,7 +114,7 @@ function Rockets({ data, localToken }) {
                 />
               </div>
 
-              <div>
+              <div className="textDiv">
                 <label
                   className="visually-hidden"
                   htmlFor={singleRocket.rocket_id}
@@ -122,9 +122,9 @@ function Rockets({ data, localToken }) {
                   {singleRocket.rocket_name}
                 </label>
                 <p className="Tittle">{singleRocket.rocket_name}</p>
-                <p>Diameter: {singleRocket.diameter.feet}</p>
-                <p>Country: {singleRocket.country}</p>
-                <p>Description:{singleRocket.description}</p>
+                <p><span>Diameter:</span>  {singleRocket.diameter.feet}</p>
+                <p><span>Country</span>:  {singleRocket.country}</p>
+                <p><span>Description:</span>  {singleRocket.description}</p>
               </div>
             </div>
           );
@@ -132,7 +132,7 @@ function Rockets({ data, localToken }) {
 
         {!maxSelectionReach && (
           <>
-            <h3>Please make your ship selections</h3>
+            <h5>if you have not selected 3 rockets you can not start the game</h5>
           </>
         )}
         {whichPlayer === "playerOne" && maxSelectionReach && (
@@ -149,17 +149,18 @@ function Rockets({ data, localToken }) {
           </>
         )}
 
-        {/* {whichPlayer === "playerTwo" && maxSelectionReach && (
+        {whichPlayer === "playerTwo" && maxSelectionReach && (
           <>
             <button
+              className="enterGameButton"
               type="submit"
               value="You're ready to join"
               onClick={rocketSelectionSubmit}
             >
-              <Link to="/GameBoardTwo">Enter the Game Player Two</Link>
+              {/* <Link to="/GameBoardTwo">Enter the Game Player Two</Link> */}
             </button>
           </>
-        )} */}
+        )}
       </form>
     </div>
   );

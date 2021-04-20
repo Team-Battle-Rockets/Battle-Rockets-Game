@@ -1,12 +1,6 @@
 label {
   color: black;
 }
-
-h3 {
-  color: black;
-  text-align: center;
-  font-size: 40px;
-}
 input[type="checkbox"] {
   width: 30px;
   height: 30px;
@@ -19,27 +13,98 @@ h4,
 .grid-container {
   color: black;
 }
-
-.grid-container {
-  display: grid;
-  font-family: var(--fontBody);
-  font-size: 16px;
-  grid-template-columns: 43% 43%;
-  padding-top: 73px;
-  justify-content: space-around;
-}
 .flex {
   display: flex;
   margin: 30px;
+  
 }
 .Tittle {
   font-family: var(--fontHeading);
   font-size: 30px;
 }
-
 input[type="submit"] {
   position: relative;
   left: 400px;
   padding: 10px;
   width: 50%;
 }
+/*new stuff  */
+.textDiv {
+  margin-left: 10px;
+}
+
+.flex p {
+  margin:5px;
+  line-height: 1.6;
+}
+
+span {
+  font-weight: bold;
+  border-bottom: 3px solid var(--yellow);
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size: 60px;
+  font-family: var(--fontHeading);
+  margin-top:25px;
+  margin-bottom: 25px;
+}
+
+h3 {
+  color: black;
+  text-align: center;
+  font-size: 37px;
+  font-family:var( --fontBody);
+}
+.grid-container {
+  display: grid;
+  font-family: var(--fontBody);
+  font-size: 16px;
+  grid-template-columns: 50% 50%;
+  padding-top: 73px;
+  justify-content: space-around;
+  padding-bottom: 100px;
+}
+
+
+h5 {
+  width: 50px;
+  height: 50px;
+  animation: heartbeat 1s infinite;
+  color:var(--red);
+  font-size: 20px;
+  width: 100%;
+}
+
+@keyframes heartbeat 
+{
+  0%
+  {
+    transform: scale( .80 );
+  }
+  20%
+  {
+    transform: scale( 1 );
+  }
+  40%
+  {
+    transform: scale( 1 );
+  }
+  60%
+  {
+    transform: scale( 1 );
+  }
+  80%
+  {
+    transform: scale( 1 );
+  }
+  100%
+  {
+    transform: scale( 1 );
+  }
+}
+
+/* .enterGameButton {
+  
+} */
