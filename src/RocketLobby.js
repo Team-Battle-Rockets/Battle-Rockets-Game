@@ -132,7 +132,7 @@ function Rockets({ data, localToken }) {
 
         {!maxSelectionReach && (
           <>
-            <h5>if you have not selected 3 rockets you can not start the game</h5>
+            <h5>if you have not selected 3 rockets, you can not start the game</h5>
           </>
         )}
         {whichPlayer === "playerOne" && maxSelectionReach && (
