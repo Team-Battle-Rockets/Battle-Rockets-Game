@@ -2,7 +2,6 @@
 
 :root {
   --black: #121212;
-  --darkGrey: #100915;
   --white: #f0f0f0;
   --blue: #003049;
   --red: #d62828;
@@ -27,10 +26,11 @@
   transform: scale(1.2);
 }
 /*  */
-
 .gameStartSection {
   height: 100vh;
-  background-image: url(./images/background.png);
+  /* background-image: url(./images/background.png); */
+  /* background-image: url(./images/billy-huynh-W8KTS-mhFUE-unsplash.jpg); */
+  background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
   background-color: var(--blue);
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,8 +44,7 @@
   font-family: var(--fontHeading);
   font-size: 7.5rem;
   color: var(--yellow);
-  text-shadow: 5px 5px 0px #a44a66, 10px 10px 0px #693858, 15px 15px 0px #3c1329,
-    20px 20px 0px #302644;
+  text-shadow: 10px 10px 0px var(--black);
 }
 .gameStartContainer {
   display: flex;
@@ -54,14 +53,42 @@
   align-items: center;
   width: 50%;
   text-align: center;
-  background-color: var(--darkGrey);
+  background-color: var(--black);
   color: var(--white);
   font-family: var(--fontBody);
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 40px;
 }
 .gameStartContainer input[type="text"] {
   padding: 10px;
   text-align: center;
   margin: 20px;
+  min-width: 300px;
 }
+.gameStartContainer button {
+  background-color: #850000;
+  border-radius: 5px;
+  border: transparent;
+  margin-top: 20px;
+  padding: 15px 25px;
+  transition: 0.5;
+}
+.gameStartContainer button:hover,
+.gameStartContainer button:focus {
+  background-color: #ac1313;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.gameStartContainer a {
+  font-size: 1.5rem;
+  letter-spacing: 1.5px;
+  font-family: var(--fontHeading);
+  color: var(--white);
+  font-weight: bold;
+}
+.gameStartContainer h2:nth-child(2) {
+  padding-top: 15px;
+}
+
+/*  */
+/*  */
