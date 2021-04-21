@@ -22,6 +22,7 @@ function GameBoard({data, localToken}) {
     //   placeRockets(data.playerTwo.rocketSelected[2], boards.playerTwo, "playerTwo");
   //   }
   // }
+
   
   const [boardPlayerOne, setBoardPlayerOne] = useState(data.playerOne.grid);
   const [boardPlayerTwo, setBoardPlayerTwo] = useState(data.playerTwo.grid);
@@ -143,11 +144,9 @@ function GameBoard({data, localToken}) {
 
   // game logic is handled inside this function that is triggered when the user clicks on any square
   const handleClick = (event, index, player) => {
-    console.log(event.target.value)
-    console.log(index)
     console.log(player)
-    const dbRef = firebase.database().ref();
-      if (data.isGameOver) {
+    console.log(data.isPlayerOneTurn)
+      if (!data.isGameOver) {
         // this variable gathers the value mapped into the button, which corresponds to a point in the array
         const cell = event.target.value;
         // creating copies of both arrays that will be used to set the updated states of the game board and mirror
@@ -161,6 +160,7 @@ function GameBoard({data, localToken}) {
               boardCopy[index] = "🚀";
               setPlayerOneScore(playerOneScore - 1);
             }
+            
             // this sets the state of the board for player two.
             setBoardPlayerTwo(boardCopy);
             // switch from player to player
@@ -183,32 +183,30 @@ function GameBoard({data, localToken}) {
           }
         }
       }
-      console.log(playerOneTurn)
-    const winPopUp = document.querySelector(".win");
-    const winButton = document.querySelector(".winButt");
+    // const winPopUp = document.querySelector(".win");
+    // const winButton = document.querySelector(".winButt");
 
-    if (playerOneScore === 0 || playerTwoScore === 0) {
-      setIsGameOver(true);
-      // game is over: direct to pop up component to display winner
-      WinPopUp();
-      winPopUp.classList.remove("hidden");
-      winButton.classList.remove("hidden");
-    }
+    // if (playerOneScore === 0 || playerTwoScore === 0) {
+    //   setIsGameOver(true);
+    //   // game is over: direct to pop up component to display winner
+    //   WinPopUp();
+    //   winPopUp.classList.remove("hidden");
+    //   winButton.classList.remove("hidden");
+    // }
 
-    const gameLogic = {
-      playerOne : {
-        grid: boardPlayerOne
-      },
-      playerTwo : {
-        grid: boardPlayerTwo
-      },
-      playerOneScore: playerOneScore,
-      playerTwoScore: playerTwoScore,
-      isPlayerOneTurn: playerOneTurn,
-      isGameOver: isGameOver,
-    };
-    dbRef.set(gameLogic);
+    // const gameLogic = {
+    //   playerOneGrid: boardPlayerOne,
+    //   playerTwoGrid: boardPlayerTwo,
+    //   playerOneScore: playerOneScore,
+    //   playerTwoScore: playerTwoScore,
+    //   isPlayerOneTurn: playerOneTurn,
+    //   isGameOver: isGameOver,
+    // };
+    // dbRef.update(gameLogic);
   };
+
+
+
 
   // this useEffect checks if there is a game winner and updates firebase with the game results after every player click.
   // useEffect( () => {
@@ -238,7 +236,7 @@ function GameBoard({data, localToken}) {
   //   };
   //   dbRef.update(gameLogic);
 
-  // }, [])
+  // }, [boardPlayerOne, boardPlayerTwo, playerOneScore, playerTwoScore, playerOneTurn, isGameOver])
 
   //   const dbRef = firebase.database().ref();
   //   const gameLogic = {

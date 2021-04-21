@@ -103,7 +103,6 @@ function RocketLobby({ data, localToken }) {
     firebase.database().ref(whichPlayer).update({
       rocketSelected: rocketSelected,
     });
-    console.log(whichPlayer);
     placeRockets(rocketSelected[0], whichPlayer);
     placeRockets(rocketSelected[1], whichPlayer);
     placeRockets(rocketSelected[2], whichPlayer);

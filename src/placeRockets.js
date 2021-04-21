@@ -9,7 +9,6 @@ const boards = {
   // this function is used to randomly rotate rockets and place them randomly on the gameboard, and in the gameboard array.
   const placeRockets = (rocket, player) => {
     const gameLogic = {};
-    console.log(player)
     const gameBoard = boards[player];
     // getting random value from ship direction array to see if ship will be pointed horizontally or vertically, why showing how many jumps its position will take in the array. If it's horizontal, it will increment by one, and if vertical, it will increment by 7 (the width of the board).
     let direction;
