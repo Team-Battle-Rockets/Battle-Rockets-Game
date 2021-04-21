@@ -1,0 +1,41 @@
+/* media query Home page */
+ @media (max-width: 840px) {
+   section.gameStartSection h1 {
+    font-size: 6.5rem;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  div.gameStartContainer a {
+    font-size: 1rem;
+  }
+  div.gameStartContainer input[type="text"] {
+    min-width: 250px;
+  }
+ }
+ @media (max-width: 640px) {
+
+  section.gameStartSection h1 {
+    font-size: 5.5rem;
+  }
+  div.gameStartContainer {
+    width: 60%;
+    margin-top: 40px;
+  }
+  div.gameStartContainer button {
+    margin-top: 8px;
+    padding: 6px 17px;
+    }
+ }
+
+ @media (max-width: 500px) {
+   div.gameStartContainer {
+    width: 90%;
+  }
+ }
+
+ @media (max-width: 320px) {
+   div.gameStartSection h1 {
+    font-size: 4.5rem;
+    }   
+ }
