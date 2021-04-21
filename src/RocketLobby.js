@@ -143,6 +143,7 @@ function Rockets({ data, localToken }) {
             <>
               <Link to="/GameBoardOne">
                 <button
+                  className="submitButton"
                   type="button"
                   value="You're ready to join"
                   onClick={rocketSelectionSubmit}
