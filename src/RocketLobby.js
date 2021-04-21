@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 import rocket1 from "./images/rocket-1.png";
 import rocket2 from "./images/rocket-2.png";
 import rocket3 from "./images/rocket-3.png";
-
+import GameBoard from "./GameBoard";
 import WaitingRoom from "./WaitingRoom";
+import placeRockets from "./placeRockets";
 
-function Rockets({ data, localToken }) {
+function RocketLobby({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
   const [rocketSelected, setRocketSelected] = useState([]);
   const [whichPlayer, setWhichPlayer] = useState("playerOne");
@@ -95,7 +96,6 @@ function Rockets({ data, localToken }) {
   };
 
   let areWeReady = false;
-  console.log(areWeReady)
 
 
   //onClick will push the rockets selected to firebase (depending on user of course)
@@ -103,6 +103,10 @@ function Rockets({ data, localToken }) {
     firebase.database().ref(whichPlayer).update({
       rocketSelected: rocketSelected,
     });
+    console.log(whichPlayer);
+    placeRockets(rocketSelected[0], whichPlayer);
+    placeRockets(rocketSelected[1], whichPlayer);
+    placeRockets(rocketSelected[2], whichPlayer);
     areWeReady = true;
   };
 
@@ -185,11 +189,11 @@ function Rockets({ data, localToken }) {
         )}
       </form>
       {
-        areWeReady && (<WaitingRoom  data={data} localToken={localToken} />)
+        areWeReady && (<GameBoard data={data} localToken={localToken} />)
       }
       
     </div>
   );
 }
 
-export default Rockets;
+export default RocketLobby;

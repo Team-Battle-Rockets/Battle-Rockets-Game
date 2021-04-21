@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
-
+import ScriptTag from 'react-script-tag';
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
 import GameBoard from "./GameBoard";
@@ -31,7 +31,6 @@ function App() {
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
     firebase.database().ref("isPlayerOneTurn").set(true);
-    firebase.database().ref("playerOneGrid").set(["0"]);
   };
   //capture the local token number
   function captureTheToken(localToken) {
@@ -41,6 +40,7 @@ function App() {
   //THE RETURN
   return (
     <Router>
+      <ScriptTag type="text/javascript" src="placeRockets.js" />
       <div>
         {/* Button for testing only */}
         <div className="starAbortContainer">
@@ -83,15 +83,17 @@ function App() {
         <Route
           exact
           path="/GameBoardOne"
-          component={WaitingRoom}
+          component={() => (
+            <GameBoard data={data} localToken={localAssignedToken} />
+          )}
         />
-        {/* <Route
+        <Route
           exact
           path="/GameBoardTwo"
           component={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
-        /> */}
+        />
       </div>
 
     </Router>
