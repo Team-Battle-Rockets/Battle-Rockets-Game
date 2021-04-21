@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
 import GameBoard from "./GameBoard";
+import WaitingRoom from "./WaitingRoom";
 // import PlaceHolderComponent from "./PlaceHolderComponent";
 
 import star from "./images/star.png";
@@ -30,6 +31,7 @@ function App() {
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
     firebase.database().ref("isPlayerOneTurn").set(true);
+    firebase.database().ref("playerOneGrid").set(["0"]);
   };
   //capture the local token number
   function captureTheToken(localToken) {
@@ -81,18 +83,17 @@ function App() {
         <Route
           exact
           path="/GameBoardOne"
-          component={() => (
-            <GameBoard data={data} localToken={localAssignedToken} />
-          )}
+          component={WaitingRoom}
         />
-        <Route
+        {/* <Route
           exact
           path="/GameBoardTwo"
           component={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
-        />
+        /> */}
       </div>
+
     </Router>
   );
 }

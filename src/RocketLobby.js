@@ -8,6 +8,8 @@ import rocket1 from "./images/rocket-1.png";
 import rocket2 from "./images/rocket-2.png";
 import rocket3 from "./images/rocket-3.png";
 
+import WaitingRoom from "./WaitingRoom";
+
 function Rockets({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
   const [rocketSelected, setRocketSelected] = useState([]);
@@ -92,12 +94,20 @@ function Rockets({ data, localToken }) {
     setRocketSelected([...rocketSelected, rocketDetails]);
   };
 
+  let areWeReady = false;
+  console.log(areWeReady)
+
+
   //onClick will push the rockets selected to firebase (depending on user of course)
   const rocketSelectionSubmit = () => {
     firebase.database().ref(whichPlayer).update({
       rocketSelected: rocketSelected,
     });
+    areWeReady = true;
   };
+
+ 
+
 
   return (
     <div className="wrapper">
@@ -174,6 +184,10 @@ function Rockets({ data, localToken }) {
           </>
         )}
       </form>
+      {
+        areWeReady && (<WaitingRoom  data={data} localToken={localToken} />)
+      }
+      
     </div>
   );
 }
