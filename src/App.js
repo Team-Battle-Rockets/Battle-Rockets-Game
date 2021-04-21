@@ -53,6 +53,7 @@ function App() {
           />
         </div>
         {/* Button for testing only */}
+
         {/* once both players have both entered the game, GameStart will hide */}
         {!playerTwo && (
           <GameStart
@@ -61,33 +62,57 @@ function App() {
             captureTheToken={captureTheToken}
           />
         )}
+
         {/* Routing for Rocket lobbies */}
         <Route
           exact
           path="/RocketLobbyOne"
-          component={() => (
+          render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
+          // component={() => (
+          //   <RocketLobby
+          //     key={"RocketLobbyOne"}
+          //     data={data}
+          //     localToken={localAssignedToken}
+          //   />
+          // )}
         />
         <Route
           exact
           path="/RocketLobbyTwo"
-          component={() => (
+          render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
+          // component={() => (
+          //   <RocketLobby
+          //     key={"RocketLobbyTwo"}
+          //     data={data}
+          //     localToken={localAssignedToken}
+          //   />
+          // )}
         />
+
         {/* Routing for Game boards */}
         <Route
           exact
           path="/GameBoardOne"
-          component={() => (
+          // component={() => (
+          //   <GameBoard data={data} localToken={localAssignedToken} />
+          // )}
+          // component={PlaceHolderComponent}
+          render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
         <Route
           exact
           path="/GameBoardTwo"
-          component={() => (
+          // component={() => (
+          //   <GameBoard data={data} localToken={localAssignedToken} />
+          // )}
+          // component={PlaceHolderComponent}
+          render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />

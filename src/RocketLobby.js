@@ -1,9 +1,10 @@
 import "./RocketLobby.css";
 import firebase from "./firebase";
+import Navbar from "./Navbar";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import rocket1 from "./images/rocket-1.png";
 import rocket2 from "./images/rocket-2.png";
 import rocket3 from "./images/rocket-3.png";
@@ -15,7 +16,8 @@ function RocketLobby({ data, localToken }) {
   const [rocketSelected, setRocketSelected] = useState([]);
   const [whichPlayer, setWhichPlayer] = useState("playerOne");
   const [userName, setUserName] = useState("");
-
+  const [hideForm, setHideForm] = useState(false);
+  const history = useHistory();
   //api call to SpaceX to get the different rocket types
   useEffect(() => {
     axios({
@@ -74,22 +76,50 @@ function RocketLobby({ data, localToken }) {
     if (value === "Falcon 1") {
       rocketDetails.name = value;
       rocketDetails.size = 2;
+<<<<<<< HEAD
       rocketDetails.directions = [[0, 1],[0, 7]]
+=======
+      rocketDetails.directions = [
+        [0, 1],
+        [0, 7],
+      ];
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
     }
     if (value === "Falcon 9") {
       rocketDetails.name = value;
       rocketDetails.size = 3;
+<<<<<<< HEAD
       rocketDetails.directions = [[0, 1, 2],[0, 7, 14]]
+=======
+      rocketDetails.directions = [
+        [0, 1, 2],
+        [0, 7, 14],
+      ];
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
     }
     if (value === "Falcon Heavy") {
       rocketDetails.name = value;
       rocketDetails.size = 4;
+<<<<<<< HEAD
       rocketDetails.directions = [[0, 1, 2, 3],[0, 7, 14, 21]]
+=======
+      rocketDetails.directions = [
+        [0, 1, 2, 3],
+        [0, 7, 14, 21],
+      ];
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
     }
     if (value === "Starship") {
       rocketDetails.name = value;
       rocketDetails.size = 4;
+<<<<<<< HEAD
       rocketDetails.directions = [[0, 1, 2, 3],[0, 7, 14, 21]]
+=======
+      rocketDetails.directions = [
+        [0, 1, 2, 3],
+        [0, 7, 14, 21],
+      ];
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
     }
     setRocketSelected([...rocketSelected, rocketDetails]);
   };
@@ -98,7 +128,9 @@ function RocketLobby({ data, localToken }) {
 
 
   //onClick will push the rockets selected to firebase (depending on user of course)
-  const rocketSelectionSubmit = () => {
+  const rocketSelectionSubmit = (e) => {
+    e.preventDefault();
+    setHideForm(true);
     firebase.database().ref(whichPlayer).update({
       rocketSelected: rocketSelected,
     });
@@ -108,6 +140,7 @@ function RocketLobby({ data, localToken }) {
     areWeReady = true;
   };
 
+<<<<<<< HEAD
  
 
 
@@ -138,42 +171,56 @@ function RocketLobby({ data, localToken }) {
                   alt={singleRocket.rocket_name}
                 />
               </div>
+=======
+  const allPlayersReady =
+    data.playerOne.rocketSelected && data.playerTwo.rocketSelected;
+  useEffect(() => {
+    if (allPlayersReady) {
+      if (whichPlayer === "playerOne") {
+        history.push("/GameBoardOne");
+      }
+      if (whichPlayer === "playerTwo") {
+        history.push("/GameBoardTwo");
+      }
+    }
+  }, [allPlayersReady]);
 
-              <div>
-                <label
-                  className="visually-hidden"
-                  htmlFor={singleRocket.rocket_id}
-                >
-                  {singleRocket.rocket_name}
-                </label>
-                <p className="Tittle">{singleRocket.rocket_name}</p>
-                <p>Diameter: {singleRocket.diameter.feet}</p>
-                <p>Country: {singleRocket.country}</p>
-                <p>Description:{singleRocket.description}</p>
-              </div>
-            </div>
-          );
-        })}
+  return (
+    <>
+      <Navbar />
+      <section className="rocketLobbySection">
+        <div className="wrapper">
+          {!hideForm && (
+            <>
+              <h2>Welcome, {userName}!</h2>
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
 
-        {!maxSelectionReach && (
-          <>
-            <h3>Please make your ship selections</h3>
-          </>
-        )}
-        {whichPlayer === "playerOne" && maxSelectionReach && (
-          <>
-            <Link to="/GameBoardOne">
-              <button
-                type="button"
-                value="You're ready to join"
-                onClick={rocketSelectionSubmit}
-              >
-                Enter the Game Player One
-              </button>
-            </Link>
-          </>
-        )}
+              <h3>Choose Three Rockets as your game pieces </h3>
 
+              <form className="style grid-container">
+                {rocket.map((singleRocket, index) => {
+                  return (
+                    <div key={index} className="flex">
+                      <div>
+                        <input
+                          disabled={maxSelectionReach}
+                          type="checkbox"
+                          id={singleRocket.rocket_id}
+                          name={singleRocket.rocket_id}
+                          onClick={() => {
+                            handleRocketSelected(singleRocket.rocket_name);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          className="rocket1"
+                          src={singleRocket.orientation}
+                          alt={singleRocket.rocket_name}
+                        />
+                      </div>
+
+<<<<<<< HEAD
         {whichPlayer === "playerTwo" && maxSelectionReach && (
           <>
             <button
@@ -191,6 +238,71 @@ function RocketLobby({ data, localToken }) {
       }
       
     </div>
+=======
+                      <div>
+                        <label
+                          className="visually-hidden"
+                          htmlFor={singleRocket.rocket_id}
+                        >
+                          {singleRocket.rocket_name}
+                        </label>
+                        <p className="Tittle">{singleRocket.rocket_name}</p>
+                        <p>Diameter: {singleRocket.diameter.feet}</p>
+                        <p>Country: {singleRocket.country}</p>
+                        <p>Description:{singleRocket.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+                {/* waiting for players notice start */}
+                {!maxSelectionReach && (
+                  <>
+                    <h5>Please make your ship selections</h5>
+                  </>
+                )}
+                {/* waiting for players notice end */}
+                {/* playerOne submit selections start */}
+                {whichPlayer === "playerOne" && maxSelectionReach && (
+                  <>
+                    <button
+                      type="button"
+                      value="You're ready to join"
+                      onClick={rocketSelectionSubmit}
+                    >
+                      Enter the Game {userName}
+                    </button>
+                  </>
+                )}
+                {/* playerOne submit selections start */}
+                {/* playerTwo submit selections start */}
+                {whichPlayer === "playerTwo" && maxSelectionReach && (
+                  <button
+                    type="submit"
+                    value="You're ready to join"
+                    onClick={rocketSelectionSubmit}
+                  >
+                    Enter the Game {userName}
+                  </button>
+                )}
+                {/* playerTwo submit selections end */}
+              </form>
+            </>
+          )}
+          {!allPlayersReady && maxSelectionReach && (
+            <div className="rocketLobbyWaiting">
+              <h2>
+                Still waiting for other player to confirm their selections.
+              </h2>
+              <h3>
+                You will be automatically taken to the game board when both
+                sides are ready
+              </h3>
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+>>>>>>> 44df01c73c0d474d05a7f6e30aded7b13b1112bc
   );
 }
 
