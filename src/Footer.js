@@ -6,7 +6,11 @@ function Footer() {
     <footer>
       <div className="footerSection wrapper">
         <div className="red">
-          <p>Coded by <span className="patrick">Patrick</span> <span className="holly">Holly</span> <span className="mackenzie">Mackenzie</span> <span className="karen">Karen</span></p>
+          <p>Coded by 
+            <a className="patrick" href="https://www.linkedin.com/in/mmmccormack/"> Patrick</a>
+            <a className="holly" href="https://www.linkedin.com/in/hollyjasiura/"> Holly</a>
+            <a  className="mackenzie" href="https://www.linkedin.com/in/mackenzie-howey-a4299a207/"> Mackenzie</a>
+            <a className="karen" href="https://www.linkedin.com/in/karengonzalez000/"> Karen</a></p>
         </div>
         <div className="red">
           <p>Created at Juno College</p>
