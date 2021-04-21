@@ -2,11 +2,10 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
-
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
 import GameBoard from "./GameBoard";
-import PlaceHolderComponent from "./PlaceHolderComponent";
+// import PlaceHolderComponent from "./PlaceHolderComponent";
 
 import star from "./images/star.png";
 
@@ -29,7 +28,7 @@ function App() {
     firebase.database().ref("playerOne").set(false);
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
-    firebase.database().ref("isPlayerOneTurn").set(true);
+
   };
   //capture the local token number
   function captureTheToken(localToken) {
@@ -78,18 +77,22 @@ function App() {
           )}
         />
         {/* Routing for Game boards */}
-        <Route exact path="/GameBoardOne" component={GameBoard} />
+        <Route
+          exact
+          path="/GameBoardOne"
+          component={() => (
+            <GameBoard data={data} localToken={localAssignedToken} />
+          )}
+        />
         <Route
           exact
           path="/GameBoardTwo"
-          component={() => {
-            <PlaceHolderComponent
-              data={data}
-              localToken={localAssignedToken}
-            />;
-          }}
+          component={() => (
+            <GameBoard data={data} localToken={localAssignedToken} />
+          )}
         />
       </div>
+
     </Router>
   );
 }
