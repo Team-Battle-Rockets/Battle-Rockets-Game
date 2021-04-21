@@ -2,11 +2,9 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
-import ScriptTag from 'react-script-tag';
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
 import GameBoard from "./GameBoard";
-import WaitingRoom from "./WaitingRoom";
 // import PlaceHolderComponent from "./PlaceHolderComponent";
 
 import star from "./images/star.png";
@@ -40,7 +38,6 @@ function App() {
   //THE RETURN
   return (
     <Router>
-      <ScriptTag type="text/javascript" src="placeRockets.js" />
       <div>
         {/* Button for testing only */}
         <div className="starAbortContainer">

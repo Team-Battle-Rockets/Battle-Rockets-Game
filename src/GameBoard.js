@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import ScriptTag from 'react-script-tag';
+
 import firebase from "./firebase";
 import "./App.css";
 import WinPopUp from "./WinPopUp";
-import placeRockets from "./placeRockets";
+
 
 function GameBoard({data, localToken}) {
 

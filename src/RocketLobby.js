@@ -8,7 +8,6 @@ import rocket1 from "./images/rocket-1.png";
 import rocket2 from "./images/rocket-2.png";
 import rocket3 from "./images/rocket-3.png";
 import GameBoard from "./GameBoard";
-import WaitingRoom from "./WaitingRoom";
 import placeRockets from "./placeRockets";
 
 function RocketLobby({ data, localToken }) {
