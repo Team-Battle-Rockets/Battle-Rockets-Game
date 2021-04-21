@@ -11,6 +11,7 @@ function GameBoard({data}) {
   
   const [boardPlayerOne, setBoardPlayerOne] = useState(data.playerOne.grid);
   const [boardPlayerTwo, setBoardPlayerTwo] = useState(data.playerTwo.grid);
+  const [turn, setTurn] = useState(true);
   let readyToGo = false;
   if (boardPlayerOne && boardPlayerTwo) {
     readyToGo = true;
@@ -20,8 +21,8 @@ function GameBoard({data}) {
 
   // game logic is handled inside this function that is triggered when the user clicks on any square
   const handleClick = (event, index, player) => {
-    const dbRef = firebase.database().ref(`/${player}`);
     if (!data.isGameOver) {
+      const dbRef = firebase.database().ref(`/${player}`);
       // this variable gathers the value mapped into the button, which corresponds to a point in the array
       const cell = event.target.value;
       // creating copies of both arrays that will be used to set the updated states of the game board and mirror
@@ -45,19 +46,20 @@ function GameBoard({data}) {
             dbRef.update(turnResult)
           }
         } 
-      let turn;
+      const dbRef = firebase.database().ref();
       if (player === "playerOne") {
-        turn = false;
-        dbRef.update(turn);
+        const update = {};
+        update.turn = true;
+        dbRef.update(update);
         console.log(`player two turn`)
       }
       if (player === "playerTwo") {
-        turn = true;
-        dbRef.update(turn);
+        const update = {};
+        update.turn = false;
+        dbRef.update(update);
         console.log(`player one turn`)
       }
-        // updateScreen()
-      console.log(turn)
+    };
 
     // THIS IS WHEN A WINNER IS FOUND
 
@@ -72,23 +74,15 @@ function GameBoard({data}) {
     //   winButton.classList.remove("hidden");
     // }
     
-  };
 
   useEffect( () => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
       setBoardPlayerOne(response.val().playerOne.grid);
       setBoardPlayerTwo(response.val().playerTwo.grid);
+      setTurn(response.val().turn);
     });
   },[])
-
-  // const updateScreen = () => {
-  //   setBoardPlayerOne(data.playerOneGrid);
-  //   setBoardPlayerTwo(data.playerTwoGrid);
-  // }
-
-  // console.log(data.playerOneGrid);
-  // console.log(data.playerTwoGrid);
 
 
   return (
@@ -99,6 +93,7 @@ function GameBoard({data}) {
         <div className="grid boardPlayerOne">
           {boardPlayerOne.map((value, index) => {
             const playerTurn = data.turn ? true : false;
+            const cellValue = value === 0 ? null : value;
             return (
               <button
                 key={index}
@@ -106,7 +101,7 @@ function GameBoard({data}) {
                 value={boardPlayerTwo[index]}
                 disabled={playerTurn}
               >
-                {value}
+                {cellValue}
               </button>
             );
           })}
@@ -116,6 +111,7 @@ function GameBoard({data}) {
         <div className="grid boardPlayerTwo">
           {boardPlayerTwo.map((value, index) => {
             const playerTurn = data.turn ? false : true;
+            const cellValue = value === 0 ? null : value;
             return (
               <button
                 key={index}
@@ -123,7 +119,7 @@ function GameBoard({data}) {
                 value={boardPlayerOne[index]}
                 disabled={playerTurn}
               >
-                {value}
+                {cellValue}
               </button>
             );
           })}
