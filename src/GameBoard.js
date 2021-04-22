@@ -1,316 +1,278 @@
 import { useState, useEffect } from "react";
-
 import firebase from "./firebase";
 import "./App.css";
-import RocketDestroyed from './RocketDestroyed';
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import WinPopUp from './WinPopUp';
 
-// import WinPopUp from "./WinPopUp";
+// adding images for tokens in grid
+import falcon1 from "./images/falcon1.svg";
+import falcon9 from "./images/falcon9.svg";
+import falconHeavy from "./images/falconHeavy.svg";
+import starship from "./images/starship.svg";
 
 function GameBoard({ data, localToken }) {
-  const [whichPlayer, setWhichPlayer] = useState("");
-  const [rocketSelections, setRocketSelections] = useState([]);
-  // HOLLy STUFF START
+  // initializing stateful variables for the player Grids.
+  const [boardPlayerOne, setBoardPlayerOne] = useState(data.playerOne.grid);
+  const [boardPlayerTwo, setBoardPlayerTwo] = useState(data.playerTwo.grid);
+  const [whichPlayer, setWhichPlayer] = useState("playerOne");
   const [userName, setUserName] = useState("");
-  //HOLLY STUFF END
+  const [status, setStatus] = useState(`${data.playerOne.name}'s turn`)
+  const [winner, setWinner] = useState('')
+
+
+  //determine which player in order to submit the rocket selection to the appropriate branch in firebase
+  //also capture user name to display on screen
   useEffect(() => {
     if (localToken) {
       const playerOne = data.playerOne.token === localToken;
       const playerTwo = data.playerTwo.token === localToken;
       if (playerOne) {
         setWhichPlayer("playerOne");
-        setRocketSelections(data.playerOne.rocketSelected);
         setUserName(data.playerOne.name);
       }
       if (playerTwo) {
         setWhichPlayer("playerTwo");
-        setRocketSelections(data.playerTwo.rocketSelected);
         setUserName(data.playerTwo.name);
       }
     }
   }, [data, localToken]);
 
-  // initializing gameboard as an object with two arrays to use for game logic, and also to pass to firebase for two player integration
-  const gameBoards = {
-    playerOneBoard: [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ],
-    playerTwoBoard: [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ],
-  };
+  // this boolean is placed so that that the component isn't rendered until both players have selected their rockets, the rockets have been placed in their respective grids, and updated in state.
+  let readyToGo = false;
+  if (boardPlayerOne && boardPlayerTwo) {
+    readyToGo = true;
+  }
 
-  let score = 10;
-  // initializing stateful variables that will be necessary for game logic, including the player board, and the mirror of the opponent's board
-  const [boardPlayerOne, setBoardPlayerOne] = useState(
-    gameBoards.playerOneBoard
-  );
-  const [boardPlayerTwo, setBoardPlayerTwo] = useState(
-    gameBoards.playerTwoBoard
-  );
-  const [playerOneScore, setPlayerOneScore] = useState(score);
-  const [playerTwoScore, setPlayerTwoScore] = useState(score);
-  const [playerOneTurn, setPlayerOneTurn] = useState(true);
-  const [isGameOver, setIsGameOver] = useState(false);
-
-function GameBoard({data}) {
-
-      // make sure that squares we're placing rockets into aren't occupied
-      const isTaken = currentDirection.some(
-        (index) => gameBoard[randomStart + index] !== 0
-      );
-      // if current rocket is at the 6th spot in the array row (the far right edge), it can still register, but if it's higher that that it can't be placed on the board
-      const atRightEdge = currentDirection.some(
-        (index) => (randomStart + index) % 7 === 6
-      );
-      // if current rocket is at the 1st spot in the array row (row 0, the far left edge), it can still register, but if it's lower than that it can't be placed on the board
-      const atLeftEdge = currentDirection.some(
-        (index) => (randomStart + index) % 7 === 0
-      );
-      // if the rocket position meets all these conditions by not being in a taken space, and not being over the left or right edge of the board, it can be placed on the board
-      if (!isTaken && !atRightEdge && !atLeftEdge) {
-        currentDirection.forEach((index) => {
-          gameBoard[randomStart + index] = rocket.name;
-        });
-        // once the rocket has found its position, update the game board in firebase to enable two player play.
-        const dbRef = firebase.database().ref();
-        dbRef.update(gameLogic);
-
-        // if none of the conditions above are met to properly place a rocket on the gameboard, the process is repeated until successful.
-      } else placeRockets(rocket, gameBoard);
-    };
-  
-  // game logic is handled inside this function that is triggered when the user clicks on any square
+  // game logic is handled inside this function that is triggered when the user clicks on any square.
   const handleClick = (event, index, player) => {
-    const dbRef = firebase.database().ref(`/${player}`);
+    let status;
+    // this checks in firebase to see if the game is over. If not, it continues through the function.
     if (!data.isGameOver) {
+      // this makes a connection to the database for whomever is the current player.
+      const dbRef = firebase.database().ref(`/${player}`);
       // this variable gathers the value mapped into the button, which corresponds to a point in the array
       const cell = event.target.value;
-      // creating copies of both arrays that will be used to set the updated states of the game board and mirror
-        let score = data[player].score;
-        const boardCopy = data[player].grid;
-        console.log(boardCopy)
-          if (cell === "🚀" || cell === "⭕️") {
-          } else {
-            if (cell === "0") {
-              boardCopy[index] = "⭕️";
-            } else {
-              boardCopy[index] = "🚀";
-              score = score - 1;
-            }
-            // this sets the state of the board for player two
-            // switch from player to player
-            const turnResult = {
-              grid : boardCopy,
-              score : score
-            };
-            dbRef.update(turnResult)
-          }
-        } 
-      let turn;
-      if (player === "playerOne") {
-        const update = {};
-        update.turn = true;
-        dbRef.update(update);
-        console.log(`player two turn`)
-      }
-      if (player === "playerTwo") {
-        const update = {};
-        update.turn = true;
-        dbRef.update(update);
-        console.log(`player one turn`)
-      }
-        // updateScreen()
-        console.log(turn)
-        const hit = document.querySelector('.hit');
-        const missed = document.querySelector('.miss')
-    
+      // initializing a score variable and stores the array from firebase into a variable. The score is the total number of the length of your ships.
+      let score = data[player].score;
+      const boardCopy = data[player].grid;
+      // if a cell has already been pressed by a player, it will have one of these icons, and nothing will happen.
+      if (cell === "💥" || cell === "🟡") {
+        // if the user clicks an empty cell, the conditions below are run.
+      } else {
+        // values not occupied by a ship in the array are denoted with a 0, which is a miss.
         if (cell === "0") {
-          missed.classList.remove('hidden');
-          hit.classList.add('hidden');
-          RocketDestroyed();
-        } else if (cell === "R1" || "R2" || "R3") {
-          hit.classList.remove('hidden');
-          missed.classList.add('hidden');
-          RocketDestroyed();
+          boardCopy[index] = "🟡";
+          status = `${data[player].name} misses.`
+        } else {
+          // anything else in the array grid is a ship, and counts as one hit, which is marked into the array at the corresponding index, and 1 is subtracted from the total score.
+          boardCopy[index] = "💥";
+          status = `${data[player].name} hits!`
+          score = score - 1;
         }
-    };
-    dbRef.update(gameLogic);
+        // this object updates firebase with the results of the turn for the corresponding player.
+        const turnResult = {
+          grid: boardCopy,
+          score: score,
+        };
+        dbRef.update(turnResult);
+      }
+    }
+    // this determines who will take the next turn, and updates that in firebase
+    const dbRef = firebase.database().ref();
+    const update = {};
+    update.turn = player;
+    update.status = status;
+    dbRef.update(update);
   };
-  // HOLLYS STUFF STARTS HERE
-  console.log(`${whichPlayer} is ${userName}`);
-  //HOLLY STUFF ENDS HERE
-  return (
-    <section className="GameScreen wrapper">
-      {/* playerone screen start */}
 
-      {/* TOP LEFT CORNER - PLAYER ONE ATTACKS PLAYER TWO HERE*/}
-      {whichPlayer === "playerOne" && (
-        <div className="container">
-          <p>{userName}</p>
-          <div className="grid boardPlayerOne">
-            {boardPlayerTwo.map((value, index) => {
-              const playerTurn = playerOneTurn ? false : true;
-              return (
-                <button
-                  key={index}
-                  onClick={(event) => handleClick(event, index, whichPlayer)}
-                  value={boardPlayerTwo[index]}
-                  disabled={playerTurn}
-                >
-                  {value}
-                </button>
-              );
-            })}
-          </div>
+  // this useEffect opens a listener to firebase, and updates the state of the player grids when the array grids are updated in firebase
+   useEffect(() => {
+    const dbRef = firebase.database().ref();
+    dbRef.on("value", (response) => {
+      setBoardPlayerOne(response.val().playerOne.grid);
+      setBoardPlayerTwo(response.val().playerTwo.grid);
+      setStatus(response.val().status)
+      // THIS IS WHEN A WINNER IS FOUND
 
-          {/* TOP RIGHT CORNER - PLAYER TWO ATTACKS PLAYER ONE HERE*/}
-          <div className="grid boardPlayerTwo">
-            {boardPlayerOne.map((value, index) => {
-              const playerTurn = playerOneTurn ? true : false;
-              return (
-                <button
-                  key={index}
-                  onClick={(event) => handleClick(event, index, whichPlayer)}
-                  value={boardPlayerOne[index]}
-                  disabled={playerTurn}
-                >
-                  {value}
-                </button>
-              );
-            })}
-          </div>
+      let winner;
+
+      if (
+        response.val().playerOne.score === 0 ||
+        response.val().playerTwo.score === 0
+      ) { if (
+        response.val().playerOne.score === 0 ) {
+        winner = response.val().playerOne.name
+        } else if (
+          response.val().playerTwo.score === 0 ) {
+          winner = response.val().playerTwo.name
+        }
+          const dbRef = firebase.database().ref();
+          const update = {};
+          update.winner = winner
+          update.isGameOver = true;
+          dbRef.update(update);
+          // game is over: direct to pop up component to display winner}
+      }
+    });
+  }, []);
+
+    return (
+    <>
+      <Navbar />
+      <section className="gameBackground">
+        <div className="wrapper">
+          {readyToGo ? (
+            <div className="GameScreen">
+              {data.isGameOver ? <WinPopUp data={data}/> : null}
+              {/* TOP LEFT CORNER - PLAYER ONE ATTACKS PLAYER TWO HERE*/}
+              <p className="playerName">{userName}</p>
+              {whichPlayer === "playerOne" && (
+                <div className="container">
+                  <p className="status" >{data.status}</p>
+                  <div>
+                    <p className="whosBoard">Opponents Board</p>
+
+                    <div className="grid boardPlayerOne">
+                      {boardPlayerTwo.map((value, index) => {
+                        const cellValue =
+                          value === 0
+                            ? null
+                            : value === "Falcon 1"
+                            ? null
+                            : value === "Falcon 9"
+                            ? null
+                            : value === "Falcon Heavy"
+                            ? null
+                            : value === "Starship"
+                            ? null
+                            : value;
+                        return (
+                          <button
+                            key={index}
+                            onClick={
+                              data.turn === "playerOne"
+                                ? (event) =>
+                                    handleClick(event, index, "playerTwo")
+                                : null
+                            }
+                            value={boardPlayerTwo[index]}
+                          >
+                            {cellValue}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="whosBoard">Players Board</p>
+                    {/* BOTTOM LEFT CORNER - PLAYER ONE TRACKS THEIR STATUS HERE*/}
+                    <div className="grid mirrorPlayerOne">
+                      {boardPlayerOne.map((value, index) => {
+                        const cellValue =
+                          value === 0 ? null : value === "Falcon 1" ? (
+                            <img src={falcon1} alt="Falcon 1 rocket"></img>
+                          ) : value === "Falcon 9" ? (
+                            <img src={falcon9} alt="Falcon 1 rocket"></img>
+                          ) : value === "Falcon Heavy" ? (
+                            <img src={falconHeavy} alt="Falcon 1 rocket"></img>
+                          ) : value === "Starship" ? (
+                            <img src={starship} alt="Falcon 1 rocket"></img>
+                          ) : (
+                            value
+                          );
+                        return (
+                          <button key={index} value={boardPlayerOne[index]}>
+                            {cellValue}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {whichPlayer === "playerTwo" && (
+                <div className="container">
+                  <p className="status" >{data.status}</p>
+                  <div>
+                    <p className="whosBoard">Opponents Board</p>
+                    <p className="whosBoardText">
+                      Click Square to Attack your Opponent
+                    </p>
+                    {/* TOP RIGHT CORNER - PLAYER TWO ATTACKS PLAYER ONE HERE*/}
+                    <div className="grid boardPlayerTwo">
+                      {boardPlayerOne.map((value, index) => {
+                        const cellValue =
+                          value === 0
+                            ? null
+                            : value === "Falcon 1"
+                            ? null
+                            : value === "Falcon 9"
+                            ? null
+                            : value === "Falcon Heavy"
+                            ? null
+                            : value === "Starship"
+                            ? null
+                            : value;
+                        return (
+                          <button
+                            key={index}
+                            onClick={
+                              data.turn === "playerTwo"
+                                ? (event) =>
+                                    handleClick(event, index, "playerOne")
+                                : null
+                            }
+                            value={boardPlayerOne[index]}
+                          >
+                            {cellValue}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* BOTTOM RIGHT CORNER - PLAYER TWO TRACKS THEIR STATUS */}
+                  <div>
+                    <p className="whosBoard">Players Board</p>
+                    <p className="whosBoardText">
+                      Where Your Rockets have Been Hit
+                    </p>
+                    <div className="grid mirrorPlayerTwo">
+                      {boardPlayerTwo.map((value, index) => {
+                        const cellValue =
+                          value === 0 ? null : value === "Falcon 1" ? (
+                            <img src={falcon1} alt="Falcon 1 rocket"></img>
+                          ) : value === "Falcon 9" ? (
+                            <img src={falcon9} alt="Falcon 1 rocket"></img>
+                          ) : value === "Falcon Heavy" ? (
+                            <img src={falconHeavy} alt="Falcon 1 rocket"></img>
+                          ) : value === "Starship" ? (
+                            <img src={starship} alt="Falcon 1 rocket"></img>
+                          ) : (
+                            value
+                          );
+                        return (
+                          <button key={index} value={boardPlayerTwo[index]}>
+                            {cellValue}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : null}
         </div>
-      )}
-      {/* playerone screen end */}
-
-      {/* playerTwo screen start */}
-      {whichPlayer === "playerTwo" && (
-        <div className="container">
-          <p>{userName}</p>
-          {/* BOTTOM LEFT CORNER - PLAYER ONE TRACKS THEIR STATUS HERE*/}
-          <div className="grid mirrorPlayerOne">
-            <p>left top board</p>
-            {boardPlayerOne.map((value, index) => {
-              const cellValue = value === 0 ? null : value;
-              return (
-                <button key={index} value={boardPlayerOne[index]}>
-                  {cellValue}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* BOTTOM RIGHT CORNER - PLAYER TWO TRACKS THEIR STATUS */}
-          <div className="grid mirrorPlayerTwo">
-            <p>left bottom board</p>
-            {boardPlayerTwo.map((value, index) => {
-              const cellValue = value === 0 ? null : value;
-              return (
-                <button key={index} value={boardPlayerTwo[index]}>
-                  {cellValue}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </section>
+      </section>
+      <Footer />
+      </>
   );
+}
 
 export default GameBoard;
+
+

@@ -2,12 +2,14 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
-import GameBoard from "./GameBoard";
-// import PlaceHolderComponent from "./PlaceHolderComponent";
+// import GameBoard from "./GameBoard";
+import PlaceHolderComponent from "./PlaceHolderComponent";
 
 import star from "./images/star.png";
+import GameBoard from "./GameBoard";
 
 function App() {
   const [data, setData] = useState({});
@@ -28,7 +30,9 @@ function App() {
     firebase.database().ref("playerOne").set(false);
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
-
+    firebase.database().ref("turn").set("playerOne");
+    firebase.database().ref('status').set("");
+    firebase.database().ref('winner').set("");
   };
   //capture the local token number
   function captureTheToken(localToken) {
@@ -70,13 +74,6 @@ function App() {
           render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
-          // component={() => (
-          //   <RocketLobby
-          //     key={"RocketLobbyOne"}
-          //     data={data}
-          //     localToken={localAssignedToken}
-          //   />
-          // )}
         />
         <Route
           exact
@@ -84,13 +81,6 @@ function App() {
           render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
-          // component={() => (
-          //   <RocketLobby
-          //     key={"RocketLobbyTwo"}
-          //     data={data}
-          //     localToken={localAssignedToken}
-          //   />
-          // )}
         />
 
         {/* Routing for Game boards */}
@@ -101,6 +91,9 @@ function App() {
           //   <GameBoard data={data} localToken={localAssignedToken} />
           // )}
           // component={PlaceHolderComponent}
+          // render={() => (
+          //   <GameBoard data={data} localToken={localAssignedToken} />
+          // )}
           render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
@@ -112,12 +105,14 @@ function App() {
           //   <GameBoard data={data} localToken={localAssignedToken} />
           // )}
           // component={PlaceHolderComponent}
+          // render={() => (
+          //   <GameBoard data={data} localToken={localAssignedToken} />
+          // )}
           render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
       </div>
-
     </Router>
   );
 }
