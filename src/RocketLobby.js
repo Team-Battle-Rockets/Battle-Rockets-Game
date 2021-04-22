@@ -62,8 +62,10 @@ function RocketLobby({ data, localToken }) {
         setUserName(data.playerTwo.name);
       }
     }
+
   }, [data, localToken]);
 
+  
   //captures the selected rockets, put them in an array for push to firebase once all selections are made
   const maxSelectionReach = rocketSelected.length === 3;
   const handleRocketSelected = (value) => {
@@ -103,9 +105,9 @@ function RocketLobby({ data, localToken }) {
       rocketSelected: rocketSelected,
       score: rocketSelected[0].size + rocketSelected[1].size + rocketSelected[2].size 
     });
-    placeRockets(rocketSelected[0], whichPlayer);
-    placeRockets(rocketSelected[1], whichPlayer);
-    placeRockets(rocketSelected[2], whichPlayer);
+    setTimeout(() => placeRockets(rocketSelected[0], whichPlayer), 500);
+    setTimeout(() => placeRockets(rocketSelected[1], whichPlayer), 1000);
+    setTimeout(() => placeRockets(rocketSelected[2], whichPlayer), 1500);
     areWeReady = true;
   };
 

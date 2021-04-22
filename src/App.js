@@ -28,7 +28,7 @@ function App() {
     firebase.database().ref("playerOne").set(false);
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
-    firebase.database().ref("turn").set(true);
+    firebase.database().ref("turn").set("playerOne");
 
   };
   //capture the local token number
@@ -66,14 +66,14 @@ function App() {
         <Route
           exact
           path="/RocketLobbyOne"
-          component={() => (
+          render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
         />
         <Route
           exact
           path="/RocketLobbyTwo"
-          component={() => (
+          render={() => (
             <RocketLobby data={data} localToken={localAssignedToken} />
           )}
         />
@@ -81,14 +81,14 @@ function App() {
         <Route
           exact
           path="/GameBoardOne"
-          component={() => (
+          render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
         <Route
           exact
           path="/GameBoardTwo"
-          component={() => (
+          render={() => (
             <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
