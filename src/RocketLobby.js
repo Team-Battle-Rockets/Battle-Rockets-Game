@@ -49,7 +49,7 @@ function Rockets({ data, localToken }) {
         setRocket(rocketWeight);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   }, []);
 
