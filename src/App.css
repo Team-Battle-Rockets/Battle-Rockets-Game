@@ -399,6 +399,7 @@ footer {
 .rocketLobbySection h2,
 .rocketLobbySection h3 {
   text-align: center;
+  padding: 40px;
 }
 .rocketLobbySection h2 {
   padding-top: 40px;
@@ -425,6 +426,13 @@ input[type="checkbox"] {
   font-family: var(--fontHeading);
   font-size: 30px;
   margin-left: 4px;
+}
+input[type="submit"] {
+  position: relative;
+  left: 400px;
+  padding: 10px;
+  width: 50%;
+
 }
 .textDiv {
   margin-left: 10px;
@@ -596,6 +604,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 @media (max-width: 640px) {
   .gameStartSection h1 {
     font-size: 4.3rem;
+
   }
   .gameStartContainer {
     width: 60%;
@@ -619,6 +628,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .footerSection {
     padding: 15px 15px;
   }
+
 }
 
 @media (max-width: 395px) {
