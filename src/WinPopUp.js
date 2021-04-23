@@ -1,5 +1,6 @@
 import firebase from "./firebase";
 import { useHistory } from "react-router-dom";
+
 function WinPopUp({ data }) {
   const history = useHistory();
   const removeEverything = () => {
