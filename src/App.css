@@ -223,14 +223,6 @@ template {
 [hidden] {
   display: none;
 }
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: "";
-  clear: both;
-  height: 0;
-}
 *,
 *:before,
 *:after {
@@ -316,7 +308,7 @@ a {
 /* Footer Styling */
 footer {
   font-family: var(--fontBody);
-  background-color: var(--blue);
+  background-color: var(--black);
 }
 .footerSection {
   height: 8vh;
@@ -437,7 +429,6 @@ input[type="checkbox"] {
   font-size: 1rem;
   margin: 5px;
   line-height: 1.6;
-  background-color: lightcoral;
 }
 .rocketLobbySection span {
   font-weight: bold;
@@ -481,14 +472,18 @@ input[type="checkbox"] {
     transform: scale(1);
   }
 }
+/* added for accessibility - some users may prefer reduced motion */
+@media (prefers-reduced-motion) {
+  .rocketLobbySection h5 {
+    animation: heartbeat 5s infinite;
+  }
+}
 div.flex:nth-child(3) > div:nth-child(2),
 div.flex:nth-child(1) > div:nth-child(2) {
   width: 500px;
-  background-color: hotpink;
 }
 div.flex:nth-child(4) > div:nth-child(2) {
   width: 600px;
-  background-color: indianred;
 }
 .submitButton {
   grid-area: 3 / span 2;
@@ -508,11 +503,9 @@ div.flex:nth-child(4) > div:nth-child(2) {
 }
 div.flex:nth-child(3) > div:nth-child(3) {
   margin-left: 22px;
-  background-color: indigo;
 }
 div.flex:nth-child(2) > div:nth-child(3) {
   margin-left: 20px;
-  background-color: lawngreen;
 }
 /* rocket lobby waiting for players screen */
 .rocketLobbyWaiting {
