@@ -31,11 +31,6 @@ function Rockets({ data, localToken }) {
       .then((res) => {
         const rocketWeight = res.data.map((rWeight) => {
           const singleRocketWeight = rWeight.mass.kg;
-<<<<<<< HEAD
-          console.log(singleRocketWeight)
-=======
-          console.log(singleRocketWeight);
->>>>>>> 7d07f7f1aeec685febcb4503a8d0afbf6db96c94
           let weight = falconHeavy;
           if (singleRocketWeight < 100000) {
             weight = falcon1;
@@ -44,10 +39,7 @@ function Rockets({ data, localToken }) {
           } else if (singleRocketWeight < 1400000) {
             weight = starship;
           } else {
-<<<<<<< HEAD
-
-=======
->>>>>>> 7d07f7f1aeec685febcb4503a8d0afbf6db96c94
+            weight = falconHeavy;
           }
           return {
             ...rWeight,
