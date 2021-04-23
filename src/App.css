@@ -1,11 +1,15 @@
-/* Homepage */
-/* Media Query Home Page */
-/* RocketLobby styling */
-/* Gameboard styling */
-/* NavBar Styling */
-/* Footer styling  */
-/* Media query*/
-/* CSS */
+/* 
+- imports & variables
+- setup snippet
+- general style, shared styles 
+- navbar styles
+- footer styles
+- game start component
+- rocket lobby component
+- rocket lobby waiting area styling
+- game board styling
+- media queries
+*/
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Teko:wght@500&display=swap");
 :root {
@@ -219,14 +223,6 @@ template {
 [hidden] {
   display: none;
 }
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: "";
-  clear: both;
-  height: 0;
-}
 *,
 *:before,
 *:after {
@@ -264,15 +260,22 @@ template {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; /* added line */
 }
+
+/* general & shared styles */
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
   height: auto;
 }
+.flexColumnCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 a {
   text-decoration: none;
 }
-/* Homepage */
 .starAbortContainer {
   z-index: 10;
   position: absolute;
@@ -288,137 +291,8 @@ a {
 .starAbort:focus {
   transform: scale(1.2);
 }
-/*  */
-.gameStartSection {
-  height: 92vh;
-  background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.gameStartSection h1 {
-  font-family: var(--fontHeading);
-  font-size: 7.5rem;
-  color: var(--yellow);
-  text-shadow: 10px 10px 0px var(--black);
-}
-.gameStartContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  text-align: center;
-  background-color: var(--black);
-  color: var(--white);
-  font-family: var(--fontBody);
-  border-radius: 5px;
-  padding: 40px;
-}
-.gameStartContainer input[type="text"] {
-  padding: 10px;
-  text-align: center;
-  margin: 20px;
-  min-width: 300px;
-}
-.gameStartContainer h2 {
-  color: var(--white);
-}
-.gameStartContainer button {
-  background-color: #850000;
-  border-radius: 5px;
-  border: transparent;
-  margin-top: 20px;
-  padding: 15px 25px;
-  transition: 0.5;
-}
-.gameStartContainer button:hover,
-.gameStartContainer button:focus {
-  background-color: #ac1313;
-  cursor: pointer;
-  transform: scale(1.1);
-}
-.gameStartContainer a {
-  font-size: 1.5rem;
-  letter-spacing: 1.5px;
-  font-family: var(--fontHeading);
-  color: var(--white);
-  font-weight: bold;
-}
-.gameStartContainer h2:nth-child(2) {
-  padding-top: 15px;
-}
-
-/* Gameboard styling */
-
-.GameScreen {
-  text-align: center;
-  background-image: url("./images/93034.jpg");
-  background-size: cover;
-  height: 100vh;
-}
-
-.container {
-  display: flex;
-  justify-content: space-between;
-  padding: 30px 30px 0;
-}
-
-.boardPlayerOne,
-.boardPlayerTwo,
-.mirrorPlayerOne,
-.mirrorPlayerTwo {
-  width: 280px;
-  height: 280px;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 20px;
-}
-
-.boardPlayerOne,
-.mirrorPlayerOne,
-.boardPlayerTwo,
-.mirrorPlayerTwo {
-  background-image: url("./images/buttonBackground.png");
-}
-
-.boardPlayerOne button,
-.boardPlayerTwo button {
-  color: currentColor;
-}
-
-.mirrorPlayerTwo button,
-.mirrorPlayerOne button {
-  color: white;
-}
-
-.grid button {
-  width: 40px;
-  height: 40px;
-  border: 1px solid azure;
-  background-color: transparent;
-}
-
-.grid button:hover {
-  background-color: grey;
-  color: grey;
-}
-.rocket div {
-  width: 20px;
-  height: 20px;
-}
-.hidden {
-  display: none;
-}
-.win {
-  color: white;
-  margin: 0;
-}
 
 /* NavBar styling */
-
 .navbarSection {
   height: 120px;
   background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
@@ -433,9 +307,8 @@ a {
 }
 /* Footer Styling */
 footer {
-  height: 8vh;
   font-family: var(--fontBody);
-  background-color: var(--blue);
+  background-color: var(--black);
 }
 .footerSection {
   height: 8vh;
@@ -443,11 +316,10 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  color: var(--red);
   font-weight: bold;
 }
 .footerSection img {
-  height: 8vh;
+  height: 70px;
   padding-left: 10px;
 }
 .footerSection div:nth-child(2) {
@@ -465,6 +337,59 @@ footer {
   color: var(--red);
   padding-left: 10px;
 }
+/* Game Start section */
+.gameStartSection {
+  height: 92vh;
+  background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
+  text-align: center;
+}
+.gameStartSection h1 {
+  font-family: var(--fontHeading);
+  font-size: 7.5rem;
+  color: var(--yellow);
+  text-shadow: 10px 10px 0px var(--black);
+}
+.gameStartContainer {
+  width: 50%;
+  text-align: center;
+  background-color: var(--black);
+  color: var(--white);
+  font-family: var(--fontBody);
+  border-radius: 5px;
+  padding: 40px;
+}
+.gameStartContainer input[type="text"] {
+  padding: 10px;
+  text-align: center;
+  margin: 20px;
+  min-width: 300px;
+}
+.gameStartContainer h2 {
+  color: var(--white);
+}
+.gameStartContainer button,
+.winButt {
+  font-family: var(--fontHeading);
+  color: var(--white);
+  font-size: 1.7rem;
+  background-color: var(--red);
+  border-radius: 5px;
+  border: transparent;
+  margin-top: 20px;
+  padding: 15px 25px;
+  transition: 0.5;
+}
+.gameStartContainer button:hover,
+.gameStartContainer button:focus,
+.winButt:hover,
+.winButt:focus {
+  background-color: #ac1313;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.gameStartContainer h2:nth-child(2) {
+  padding-top: 15px;
+}
 
 /* RocketLobby styling */
 .rocketLobbySection h2,
@@ -472,11 +397,12 @@ footer {
   text-align: center;
 }
 .rocketLobbySection h2 {
+  padding-top: 40px;
   font-family: var(--fontHeading);
-  padding: 40px 0 20px 0;
   font-size: 4.5rem;
 }
 .rocketLobbySection h3 {
+  padding-top: 20px;
   font-family: var(--fontBody);
   font-size: 2.05rem;
 }
@@ -494,12 +420,7 @@ input[type="checkbox"] {
 .rocketTitle {
   font-family: var(--fontHeading);
   font-size: 30px;
-}
-input[type="submit"] {
-  position: relative;
-  left: 400px;
-  padding: 10px;
-  width: 50%;
+  margin-left: 4px;
 }
 .textDiv {
   margin-left: 10px;
@@ -509,21 +430,11 @@ input[type="submit"] {
   margin: 5px;
   line-height: 1.6;
 }
-
-span {
+.rocketLobbySection span {
   font-weight: bold;
   border-bottom: 3px solid var(--yellow);
   letter-spacing: 1px;
 }
-
-.welcomeText {
-  font-size: 60px;
-  font-family: var(--fontHeading);
-  margin-top: 100px;
-  margin-bottom: 25px;
-  text-align: center;
-}
-
 .grid-container {
   display: grid;
   font-family: var(--fontBody);
@@ -533,7 +444,6 @@ span {
   justify-content: space-around;
   margin-bottom: 70px;
 }
-
 .rocketLobbySection h5 {
   animation: heartbeat 1s infinite;
   color: var(--red);
@@ -542,7 +452,6 @@ span {
   text-align: center;
   grid-area: 3 / span 2;
 }
-
 @keyframes heartbeat {
   0% {
     transform: scale(0.8);
@@ -563,14 +472,12 @@ span {
     transform: scale(1);
   }
 }
-
 /* added for accessibility - some users may prefer reduced motion */
 @media (prefers-reduced-motion) {
   .rocketLobbySection h5 {
     animation: heartbeat 5s infinite;
   }
 }
-
 div.flex:nth-child(3) > div:nth-child(2),
 div.flex:nth-child(1) > div:nth-child(2) {
   width: 500px;
@@ -585,27 +492,26 @@ div.flex:nth-child(4) > div:nth-child(2) {
   background-color: var(--yellow);
   font-size: 1rem;
   color: var(--red);
+  font-weight: bold;
   border: none;
   cursor: pointer;
   transition: 0.5s;
 }
 .submitButton:hover,
 .submitButton:focus {
-  background-color: #f5b63a;
-  font-weight: bold;
+  background-color: #fcdd49;
 }
-
 div.flex:nth-child(3) > div:nth-child(3) {
   margin-left: 22px;
 }
 div.flex:nth-child(2) > div:nth-child(3) {
   margin-left: 20px;
 }
+/* rocket lobby waiting for players screen */
 .rocketLobbyWaiting {
   margin-top: 5rem;
   border: 5px solid var(--blue);
   border-radius: 3px;
-  margin-bottom: 30px;
 }
 .rocketLobbyWaiting h2 {
   font-size: 3rem;
@@ -616,20 +522,12 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 
 /* Media query  */
-@media (max-width: 1060px) {
-  .submitButton {
-    left: 430px;
-  }
-}
 @media (max-width: 900px) {
-  h5 {
-    font-size: 22px;
-    left: 150px;
-  }
-  .submitButton {
-    left: 300px;
+  .rocketLobbySection h5 {
+    font-size: 2.5rem;
   }
 }
+
 @media (max-width: 840px) {
   section.gameStartSection h1 {
     font-size: 6.5rem;
@@ -643,7 +541,11 @@ div.flex:nth-child(2) > div:nth-child(3) {
   div.gameStartContainer input[type="text"] {
     min-width: 250px;
   }
+  .footerSection img {
+    height: 40px;
+  }
 }
+
 @media (max-width: 700px) {
   .navbarSection h1 {
     font-size: 3rem;
@@ -652,57 +554,57 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .starAbort {
     width: 36px;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 52px;
     margin-top: 67px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 25px;
   }
   .grid-container {
     grid-template-columns: 93%;
+    display: initial;
   }
   .rocket1 {
     width: 81%;
   }
-  div h5 {
-    left: initial;
+  .rocketLobbySection h5 {
     font-size: 19px;
   }
-  .red p {
+  .redText {
     font-size: 14px;
   }
   .submitButton {
-    left: 150px;
-    padding: 9px 19px;
-    font-size: 15px;
+    width: 100%;
   }
 }
+
 @media (max-width: 640px) {
-  section.gameStartSection h1 {
-    font-size: 5.5rem;
+  .gameStartSection h1 {
+    font-size: 4.3rem;
   }
-  div.gameStartContainer {
+  .gameStartContainer {
     width: 60%;
     margin-top: 40px;
   }
-  div.gameStartContainer button {
-    margin-top: 8px;
-    padding: 6px 17px;
+  footer {
+    height: fit-content;
+  }
+  .footerSection {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
   }
 }
+
 @media (max-width: 540px) {
-  .red p {
+  .redText {
     font-size: 9px;
   }
   .grid-container {
     grid-template-columns: 98%;
-  }
-  .flex {
-    margin: 3px;
-  }
-  .textDiv {
-    margin-left: initial;
   }
 }
 
@@ -710,14 +612,13 @@ div.flex:nth-child(2) > div:nth-child(3) {
   div.gameStartContainer {
     width: 90%;
   }
+  .rocketImages {
+    width: 77%;
+  }
 }
 @media (max-width: 385px) {
-  .red p {
+  .redText {
     font-size: 7px;
-  }
-  .submitButton {
-    left: 88px;
-    top: 43px;
   }
 }
 @media (max-width: 360px) {
@@ -732,10 +633,10 @@ div.flex:nth-child(2) > div:nth-child(3) {
     height: 1vh;
     padding-bottom: 54px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 17px;
   }
-  div h5 {
+  .rocketLobbySection h5 {
     font-size: 15px;
   }
   p.Tittle {
@@ -744,7 +645,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .navbarSection h1 {
     font-size: 2rem;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 39px;
   }
   .submitButton {
@@ -752,7 +653,108 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 320px) {
-  div.gameStartSection h1 {
+  section.gameStartSection h1 {
     font-size: 4.5rem;
+  }
+}
+/*  */
+/*  */
+
+/* Gameboard styling */
+
+.gameBackground {
+  text-align: center;
+  background-image: linear-gradient(90deg, var(--red) 50%, var(--blue) 50%);
+  position: cover;
+  min-height: 80vh;
+  border-top: 7px solid black;
+  border-bottom: 7px solid black;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 100px 0;
+}
+.boardPlayerOne,
+.boardPlayerTwo,
+.mirrorPlayerOne,
+.mirrorPlayerTwo {
+  width: 280px;
+  height: 280px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+.boardPlayerOne,
+.mirrorPlayerOne,
+.boardPlayerTwo,
+.mirrorPlayerTwo {
+  background-image: url("./images/buttonBackground.png");
+}
+.playerName,
+.win {
+  color: var(--yellow);
+  text-shadow: 5px 5px 0px var(--black);
+  font-family: var(--fontHeading);
+  text-transform: capitalize;
+  font-size: 2.5rem;
+  padding-top: 30px;
+}
+
+.whosBoard {
+  font-family: var(--fontBody);
+  font-size: 1.5rem;
+  color: var(--yellow);
+}
+.whosBoardText {
+  padding-top: 10px;
+  font-family: var(--fontBody);
+  color: var(--yellow);
+  font-size: 1rem;
+}
+.boardPlayerOne button,
+.boardPlayerTwo button {
+  color: currentColor;
+}
+.mirrorPlayerTwo button,
+.mirrorPlayerOne button {
+  color: white;
+}
+.grid button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid azure;
+  background-color: transparent;
+}
+.grid button:hover {
+  background-color: grey;
+  color: grey;
+}
+.rocket div {
+  width: 20px;
+  height: 20px;
+}
+
+.winPop {
+  position: absolute;
+  padding: 30px;
+  width: 80%;
+  left: 50%;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+}
+
+@media (max-width: 840px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .winButt {
+    font-size: 1.3rem;
   }
 }

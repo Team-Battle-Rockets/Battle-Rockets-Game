@@ -1,10 +1,11 @@
-import firebase from "./firebase";
-import Navbar from "./Navbar";
-import placeRockets from "./placerockets";
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import firebase from "./firebase";
+import axios from "axios";
+import placeRockets from "./placerockets";
+
+import Navbar from "./Navbar";
+
 import falcon1 from "./images/falcon1.png";
 import falcon9 from "./images/falcon9.png";
 import falconHeavy from "./images/falconHeavy.png";
@@ -30,7 +31,11 @@ function Rockets({ data, localToken }) {
       .then((res) => {
         const rocketWeight = res.data.map((rWeight) => {
           const singleRocketWeight = rWeight.mass.kg;
+<<<<<<< HEAD
           console.log(singleRocketWeight)
+=======
+          console.log(singleRocketWeight);
+>>>>>>> 7d07f7f1aeec685febcb4503a8d0afbf6db96c94
           let weight = falconHeavy;
           if (singleRocketWeight < 100000) {
             weight = falcon1;
@@ -39,7 +44,10 @@ function Rockets({ data, localToken }) {
           } else if (singleRocketWeight < 1400000) {
             weight = starship;
           } else {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7d07f7f1aeec685febcb4503a8d0afbf6db96c94
           }
           return {
             ...rWeight,
@@ -53,7 +61,7 @@ function Rockets({ data, localToken }) {
       });
   }, []);
 
-  //determine which player in order to submit the rocket selection to the appropriate branch in firebase
+  //determine whichPlayer in order to submit the rocket selection to the appropriate branch in firebase
   //also capture user name to display on screen
   useEffect(() => {
     if (localToken) {
@@ -113,7 +121,6 @@ function Rockets({ data, localToken }) {
   };
 
   //onClick will push the rockets selected to firebase (depending on user of course)
-  let areWeReady = false;
   const rocketSelectionSubmit = (e) => {
     e.preventDefault();
     setHideForm(true);
@@ -127,10 +134,10 @@ function Rockets({ data, localToken }) {
           rocketSelected[1].size +
           rocketSelected[2].size,
       });
+    //running the placeRockets with a timeout to have enought time to complete operation before the next one runs.
     setTimeout(() => placeRockets(rocketSelected[0], whichPlayer), 500);
     setTimeout(() => placeRockets(rocketSelected[1], whichPlayer), 1000);
     setTimeout(() => placeRockets(rocketSelected[2], whichPlayer), 1500);
-    areWeReady = true;
   };
 
   //determine whether firebase has received all the information from both players before proceeding to the gameBoard
@@ -145,9 +152,8 @@ function Rockets({ data, localToken }) {
         history.push("/GameBoardTwo");
       }
     }
-  }, [allPlayersReady]);
-  //
-  // THE RETURN
+  }, [allPlayersReady, whichPlayer, history]);
+
   return (
     <>
       <Navbar />
@@ -159,12 +165,18 @@ function Rockets({ data, localToken }) {
               <h2>Welcome, {userName}!</h2>
 
               <h3>Please Choose Three Rockets As Your Game Pieces</h3>
-
+              {/* form with all of the rockets */}
               <form className="style grid-container">
                 {rocket.map((singleRocket, index) => {
                   return (
                     <div key={index} className="flex">
                       <div>
+                        <label
+                          className="visually-hidden"
+                          htmlFor={singleRocket.rocket_id}
+                        >
+                          {singleRocket.rocket_name}
+                        </label>
                         <input
                           disabled={maxSelectionReach}
                           type="checkbox"
@@ -184,12 +196,6 @@ function Rockets({ data, localToken }) {
                       </div>
 
                       <div className="textDiv">
-                        <label
-                          className="visually-hidden"
-                          htmlFor={singleRocket.rocket_id}
-                        >
-                          {singleRocket.rocket_name}
-                        </label>
                         <h4 className="rocketTitle">
                           {singleRocket.rocket_name}
                         </h4>
@@ -207,14 +213,15 @@ function Rockets({ data, localToken }) {
                     </div>
                   );
                 })}
-                {/* waiting for players notice start */}
+
+                {/* waiting for players to chose 3 rockets before allowing to continue */}
                 {!maxSelectionReach && (
                   <>
                     <h5>Please make your ship selections</h5>
                   </>
                 )}
-                {/* waiting for players notice end */}
-                {/* playerOne submit selections start */}
+
+                {/* playerOne submit selections  */}
                 {whichPlayer === "playerOne" && maxSelectionReach && (
                   <>
                     <button
@@ -227,8 +234,8 @@ function Rockets({ data, localToken }) {
                     </button>
                   </>
                 )}
-                {/* playerOne submit selections start */}
-                {/* playerTwo submit selections start */}
+
+                {/* playerTwo submit selections  */}
                 {whichPlayer === "playerTwo" && maxSelectionReach && (
                   <button
                     className="submitButton"
@@ -239,10 +246,10 @@ function Rockets({ data, localToken }) {
                     Click Here to Start the Game
                   </button>
                 )}
-                {/* playerTwo submit selections end */}
               </form>
             </>
           )}
+          {/* Will notify players that the other player needs to make their selections before the game came begin. */}
           {!allPlayersReady && hideForm && (
             <div className="rocketLobbyWaiting">
               <h2>
@@ -250,7 +257,7 @@ function Rockets({ data, localToken }) {
               </h2>
               <h3>
                 You will be automatically taken to the game board when both
-                sides are ready to
+                sides are ready to play!
               </h3>
             </div>
           )}

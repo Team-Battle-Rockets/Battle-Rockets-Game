@@ -1,12 +1,12 @@
-import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 
+import "./App.css";
+
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
-// import GameBoard from "./GameBoard";
-import PlaceHolderComponent from "./PlaceHolderComponent";
+import GameBoard from "./GameBoard";
 
 import star from "./images/star.png";
 
@@ -15,36 +15,37 @@ function App() {
   const [localAssignedToken, setLocalAssignedToken] = useState("");
   const history = useHistory();
 
-  //pull from firebase what's there (runs when token is assigned)
+  //pull from firebase what's in therethere
   useEffect(() => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
       setData(response.val());
     });
   }, []);
+
   const { playerOne, playerTwo } = data;
 
-  // button for clearing firebase. testing only!!!!!
+  // button for clearing firebase, reset game and return to home screen
   const removeEverything = () => {
     firebase.database().ref("playerOne").set(false);
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
     firebase.database().ref("turn").set("playerOne");
   };
-  //capture the local token number
+
+  //capture the local token number for player
   function captureTheToken(localToken) {
     setLocalAssignedToken(localToken);
   }
 
-  //THE RETURN
   return (
     <Router>
       <div>
-        {/* Button for testing only */}
+        {/* Button for resetting the game */}
         <div className="starAbortContainer">
           <img
             src={star}
-            alt="cartoon star"
+            alt="cartoon star icon"
             className="starAbort"
             onClick={() => {
               removeEverything();
@@ -53,7 +54,6 @@ function App() {
             }}
           />
         </div>
-        {/* Button for testing only */}
 
         {/* once both players have both entered the game, GameStart will hide */}
         {!playerTwo && (
@@ -65,6 +65,7 @@ function App() {
         )}
 
         {/* Routing for Rocket lobbies */}
+        <Route exact path="/" render={() => {}} />
         <Route
           exact
           path="/RocketLobbyOne"
@@ -84,29 +85,15 @@ function App() {
         <Route
           exact
           path="/GameBoardOne"
-          // component={() => (
-          //   <GameBoard data={data} localToken={localAssignedToken} />
-          // )}
-          // component={PlaceHolderComponent}
-          // render={() => (
-          //   <GameBoard data={data} localToken={localAssignedToken} />
-          // )}
           render={() => (
-            <PlaceHolderComponent data={data} localToken={localAssignedToken} />
+            <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
         <Route
           exact
           path="/GameBoardTwo"
-          // component={() => (
-          //   <GameBoard data={data} localToken={localAssignedToken} />
-          // )}
-          // component={PlaceHolderComponent}
-          // render={() => (
-          //   <GameBoard data={data} localToken={localAssignedToken} />
-          // )}
           render={() => (
-            <PlaceHolderComponent data={data} localToken={localAssignedToken} />
+            <GameBoard data={data} localToken={localAssignedToken} />
           )}
         />
       </div>
