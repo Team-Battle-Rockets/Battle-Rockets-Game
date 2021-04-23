@@ -14,21 +14,20 @@ function WinPopUp({ data }) {
     firebase.database().ref("winner").set("");
   };
   return (
+    //window pops up to announce winner and to redirect you to the starting home page
     <div className="winPop">
       {/* this displays the winner to both users. */}
       <h2 className="win">{data.winner} is the winner!</h2>
-      <form>
-        <button
-          className="winButt"
-          onClick={() => {
-            removeEverything();
-            history.push("/");
-            window.location.reload(false);
-          }}
-        >
-          Play Again!
-        </button>
-      </form>
+      <button
+        className="winButt"
+        onClick={() => {
+          removeEverything();
+          history.push("/");
+          window.location.reload(false);
+        }}
+      >
+        Play Again!
+      </button>
     </div>
   );
 }
