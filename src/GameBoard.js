@@ -35,7 +35,7 @@ function GameBoard({ data, localToken }) {
       }
     }
   }, [data, localToken]);
-  
+
   // this function is used for error handling, in the event that the database does not clear properly once the game has completed. This was clear it and take the user back to the opening screen.
   const removeEverything = () => {
     firebase.database().ref("playerOne").set(false);
@@ -130,7 +130,7 @@ function GameBoard({ data, localToken }) {
         // game is over: direct to pop up component to display winner}
       }
     });
-  }, []);
+  }, [history]);
 
   return (
     <>
