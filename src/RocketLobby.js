@@ -1,14 +1,15 @@
-import firebase from "./firebase";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import Navbar from "./Navbar";
+import firebase from "./firebase";
+import axios from "axios";
 import placeRockets from "./placerockets";
 
-import rocket1 from "./images/rocket-1.png";
-import rocket2 from "./images/rocket-2.png";
-import rocket3 from "./images/rocket-3.png";
+import Navbar from "./Navbar";
+
+import falcon1 from "./images/falcon1.png";
+import falcon9 from "./images/falcon9.png";
+import falconHeavy from "./images/falconHeavy.png";
+import starship from "./images/starship.png";
 
 function Rockets({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
@@ -28,22 +29,24 @@ function Rockets({ data, localToken }) {
     })
       //adding in our own key:value to assign images base on the height value of the individual object items
       .then((res) => {
-        const rocketHeight = res.data.map((rHeight) => {
-          const singleRocketHeight = rHeight.height.meters;
-          let orientation = rocket3;
-          if (singleRocketHeight > 100) {
-            orientation = rocket1;
-          } else if (singleRocketHeight > 50) {
-            orientation = rocket2;
+        const rocketWeight = res.data.map((rWeight) => {
+          const singleRocketWeight = rWeight.mass.kg;
+          console.log(singleRocketWeight);
+          let weight = falconHeavy;
+          if (singleRocketWeight < 100000) {
+            weight = falcon1;
+          } else if (singleRocketWeight < 800000) {
+            weight = falcon9;
+          } else if (singleRocketWeight < 1400000) {
+            weight = starship;
           } else {
-            orientation = rocket3;
           }
           return {
-            ...rHeight,
-            orientation: orientation,
+            ...rWeight,
+            weight: weight,
           };
         });
-        setRocket(rocketHeight);
+        setRocket(rocketWeight);
       })
       .catch((error) => {
         console.log(error);
@@ -142,8 +145,7 @@ function Rockets({ data, localToken }) {
       }
     }
   }, [allPlayersReady, whichPlayer, history]);
-  //
-  // THE RETURN
+
   return (
     <>
       <Navbar />
@@ -161,6 +163,12 @@ function Rockets({ data, localToken }) {
                   return (
                     <div key={index} className="flex">
                       <div>
+                        <label
+                          className="visually-hidden"
+                          htmlFor={singleRocket.rocket_id}
+                        >
+                          {singleRocket.rocket_name}
+                        </label>
                         <input
                           disabled={maxSelectionReach}
                           type="checkbox"
@@ -174,18 +182,12 @@ function Rockets({ data, localToken }) {
                       <div className="rocketImageSize">
                         <img
                           className="rocketImages"
-                          src={singleRocket.orientation}
+                          src={singleRocket.weight}
                           alt={singleRocket.rocket_name}
                         />
                       </div>
 
                       <div className="textDiv">
-                        <label
-                          className="visually-hidden"
-                          htmlFor={singleRocket.rocket_id}
-                        >
-                          {singleRocket.rocket_name}
-                        </label>
                         <h4 className="rocketTitle">
                           {singleRocket.rocket_name}
                         </h4>

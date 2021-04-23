@@ -3,7 +3,7 @@ import firebase from "./firebase";
 import "./App.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-// ADD MACKENZIE'S WIN POP UP HERE
+import WinPopUp from "./WinPopUp";
 
 // adding images for tokens in grid
 import falcon1 from "./images/falcon1.svg";
@@ -17,6 +17,8 @@ function GameBoard({ data, localToken }) {
   const [boardPlayerTwo, setBoardPlayerTwo] = useState(data.playerTwo.grid);
   const [whichPlayer, setWhichPlayer] = useState("playerOne");
   const [userName, setUserName] = useState("");
+  const [status, setStatus] = useState(`${data.playerOne.name}'s turn`);
+  const [winner, setWinner] = useState("");
 
   //determine which player in order to submit the rocket selection to the appropriate branch in firebase
   //also capture user name to display on screen
@@ -43,6 +45,7 @@ function GameBoard({ data, localToken }) {
 
   // game logic is handled inside this function that is triggered when the user clicks on any square.
   const handleClick = (event, index, player) => {
+    let status;
     // this checks in firebase to see if the game is over. If not, it continues through the function.
     if (!data.isGameOver) {
       // this makes a connection to the database for whomever is the current player.
@@ -59,9 +62,11 @@ function GameBoard({ data, localToken }) {
         // values not occupied by a ship in the array are denoted with a 0, which is a miss.
         if (cell === "0") {
           boardCopy[index] = "🟡";
+          status = `It's a miss!`;
         } else {
           // anything else in the array grid is a ship, and counts as one hit, which is marked into the array at the corresponding index, and 1 is subtracted from the total score.
           boardCopy[index] = "💥";
+          status = `It's a hit!`;
           score = score - 1;
         }
         // this object updates firebase with the results of the turn for the corresponding player.
@@ -76,6 +81,7 @@ function GameBoard({ data, localToken }) {
     const dbRef = firebase.database().ref();
     const update = {};
     update.turn = player;
+    update.status = status;
     dbRef.update(update);
   };
 
@@ -85,20 +91,26 @@ function GameBoard({ data, localToken }) {
     dbRef.on("value", (response) => {
       setBoardPlayerOne(response.val().playerOne.grid);
       setBoardPlayerTwo(response.val().playerTwo.grid);
+      setStatus(response.val().status);
       // THIS IS WHEN A WINNER IS FOUND
 
-      // ADD MACKENZIE'S STUFF HERE!
+      let winner;
 
       if (
         response.val().playerOne.score === 0 ||
         response.val().playerTwo.score === 0
       ) {
+        if (response.val().playerOne.score === 0) {
+          winner = response.val().playerTwo.name;
+        } else if (response.val().playerTwo.score === 0) {
+          winner = response.val().playerOne.name;
+        }
         const dbRef = firebase.database().ref();
         const update = {};
+        update.winner = winner;
         update.isGameOver = true;
         dbRef.update(update);
-        // game is over: direct to pop up component to display winner
-        // ADD MACKENZIE'S STUFF HERE!
+        // game is over: direct to pop up component to display winner}
       }
     });
   }, []);
@@ -110,13 +122,18 @@ function GameBoard({ data, localToken }) {
         <div className="wrapper">
           {readyToGo ? (
             <div className="GameScreen">
+              {data.isGameOver ? <WinPopUp data={data} /> : null}
               {/* TOP LEFT CORNER - PLAYER ONE ATTACKS PLAYER TWO HERE*/}
               <p className="playerName">{userName}</p>
               {whichPlayer === "playerOne" && (
                 <div className="container">
                   <div>
                     <p className="whosBoard">Opponents Board</p>
-
+                    <p className="whosBoardText">
+                      {data.status
+                        ? data.status
+                        : "Click Square to Attack your Opponent"}
+                    </p>
                     <div className="grid boardPlayerOne">
                       {boardPlayerTwo.map((value, index) => {
                         const cellValue =
@@ -151,6 +168,9 @@ function GameBoard({ data, localToken }) {
 
                   <div>
                     <p className="whosBoard">Players Board</p>
+                    <p className="whosBoardText">
+                      Where Your Rockets have Been Hit
+                    </p>
                     {/* BOTTOM LEFT CORNER - PLAYER ONE TRACKS THEIR STATUS HERE*/}
                     <div className="grid mirrorPlayerOne">
                       {boardPlayerOne.map((value, index) => {
@@ -182,7 +202,9 @@ function GameBoard({ data, localToken }) {
                   <div>
                     <p className="whosBoard">Opponents Board</p>
                     <p className="whosBoardText">
-                      Click Square to Attack your Opponent
+                      {data.status
+                        ? data.status
+                        : "Click Square to Attack your Opponent"}
                     </p>
                     {/* TOP RIGHT CORNER - PLAYER TWO ATTACKS PLAYER ONE HERE*/}
                     <div className="grid boardPlayerTwo">
