@@ -579,15 +579,16 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .starAbort {
     width: 36px;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 52px;
     margin-top: 67px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 25px;
   }
   .grid-container {
     grid-template-columns: 93%;
+    display: initial;
   }
   .rocket1 {
     width: 81%;
@@ -596,7 +597,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
     left: initial;
     font-size: 19px;
   }
-  .red p {
+  .redText {
     font-size: 14px;
   }
   .submitButton {
@@ -608,6 +609,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 @media (max-width: 640px) {
   section.gameStartSection h1 {
     font-size: 5.5rem;
+    margin-left:16px;
   }
   div.gameStartContainer {
     width: 60%;
@@ -619,7 +621,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 540px) {
-  .red p {
+  .redText {
     font-size: 9px;
   }
   .grid-container {
@@ -639,7 +641,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 385px) {
-  .red p {
+  .redText {
     font-size: 7px;
   }
   .submitButton {
@@ -659,7 +661,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
     height: 1vh;
     padding-bottom: 54px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 17px;
   }
   div h5 {
@@ -671,7 +673,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .navbarSection h1 {
     font-size: 2rem;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 39px;
   }
   .submitButton {
@@ -679,7 +681,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 320px) {
-  div.gameStartSection h1 {
+  section.gameStartSection h1 {
     font-size: 4.5rem;
   }
 }
