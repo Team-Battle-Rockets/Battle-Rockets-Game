@@ -5,7 +5,6 @@
 /* NavBar Styling */
 /* Footer styling  */
 /* Media query*/
-/* CSS */
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Teko:wght@500&display=swap");
 :root {
@@ -269,9 +268,16 @@ template {
   margin: 0 auto;
   height: auto;
 }
+.flexColumnCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 a {
   text-decoration: none;
 }
+
 /* Homepage */
 .starAbortContainer {
   z-index: 10;
@@ -288,71 +294,7 @@ a {
 .starAbort:focus {
   transform: scale(1.2);
 }
-/*  */
-.gameStartSection {
-  height: 92vh;
-  background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.gameStartSection h1 {
-  font-family: var(--fontHeading);
-  font-size: 7.5rem;
-  color: var(--yellow);
-  text-shadow: 10px 10px 0px var(--black);
-}
-.gameStartContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  text-align: center;
-  background-color: var(--black);
-  color: var(--white);
-  font-family: var(--fontBody);
-  border-radius: 5px;
-  padding: 40px;
-}
-.gameStartContainer input[type="text"] {
-  padding: 10px;
-  text-align: center;
-  margin: 20px;
-  min-width: 300px;
-}
-.gameStartContainer h2 {
-  color: var(--white);
-}
-.gameStartContainer button {
-  background-color: #850000;
-  border-radius: 5px;
-  border: transparent;
-  margin-top: 20px;
-  padding: 15px 25px;
-  transition: 0.5;
-}
-.gameStartContainer button:hover,
-.gameStartContainer button:focus {
-  background-color: #ac1313;
-  cursor: pointer;
-  transform: scale(1.1);
-}
-.gameStartContainer a {
-  font-size: 1.5rem;
-  letter-spacing: 1.5px;
-  font-family: var(--fontHeading);
-  color: var(--white);
-  font-weight: bold;
-}
-.gameStartContainer h2:nth-child(2) {
-  padding-top: 15px;
-}
-
 /* NavBar styling */
-
 .navbarSection {
   height: 120px;
   background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
@@ -367,7 +309,6 @@ a {
 }
 /* Footer Styling */
 footer {
-  height: 8vh;
   font-family: var(--fontBody);
   background-color: var(--blue);
 }
@@ -377,11 +318,10 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  color: var(--red);
   font-weight: bold;
 }
 .footerSection img {
-  height: 8vh;
+  height: 70px;
   padding-left: 10px;
 }
 .footerSection div:nth-child(2) {
@@ -400,18 +340,67 @@ footer {
   padding-left: 10px;
 }
 
+/* game start section */
+.gameStartSection {
+  height: 92vh;
+  background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
+}
+.gameStartSection h1 {
+  font-family: var(--fontHeading);
+  font-size: 7.5rem;
+  color: var(--yellow);
+  text-shadow: 10px 10px 0px var(--black);
+}
+.gameStartContainer {
+  width: 50%;
+  text-align: center;
+  background-color: var(--black);
+  color: var(--white);
+  font-family: var(--fontBody);
+  border-radius: 5px;
+  padding: 40px;
+}
+.gameStartContainer input[type="text"] {
+  padding: 10px;
+  text-align: center;
+  margin: 20px;
+  min-width: 300px;
+}
+.gameStartContainer h2 {
+  color: var(--white);
+}
+.gameStartContainer button {
+  color: var(--white);
+  font-weight: bold;
+  background-color: var(--red);
+  border-radius: 5px;
+  border: transparent;
+  margin-top: 20px;
+  padding: 15px 25px;
+  transition: 0.5;
+}
+.gameStartContainer button:hover,
+.gameStartContainer button:focus {
+  background-color: #850000;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+.gameStartContainer h2:nth-child(2) {
+  padding-top: 15px;
+}
+
 /* RocketLobby styling */
 .rocketLobbySection h2,
 .rocketLobbySection h3 {
   text-align: center;
-  padding: 40px;
 }
 .rocketLobbySection h2 {
+  padding-top: 40px;
   font-family: var(--fontHeading);
-  padding: 40px 0 20px 0;
   font-size: 4.5rem;
 }
 .rocketLobbySection h3 {
+  padding-top: 20px;
   font-family: var(--fontBody);
   font-size: 2.05rem;
 }
@@ -419,6 +408,7 @@ input[type="checkbox"] {
   width: 30px;
   height: 30px;
 }
+
 .rocketImages {
   width: 100%;
 }
@@ -431,12 +421,6 @@ input[type="checkbox"] {
   font-size: 30px;
   margin-left: 4px;
 }
-input[type="submit"] {
-  position: relative;
-  left: 400px;
-  padding: 10px;
-  width: 50%;
-}
 .textDiv {
   margin-left: 10px;
 }
@@ -445,21 +429,11 @@ input[type="submit"] {
   margin: 5px;
   line-height: 1.6;
 }
-
-span {
+.rocketLobbySection span {
   font-weight: bold;
   border-bottom: 3px solid var(--yellow);
   letter-spacing: 1px;
 }
-
-.welcomeText {
-  font-size: 60px;
-  font-family: var(--fontHeading);
-  margin-top: 100px;
-  margin-bottom: 25px;
-  text-align: center;
-}
-
 .grid-container {
   display: grid;
   font-family: var(--fontBody);
@@ -469,7 +443,6 @@ span {
   justify-content: space-around;
   margin-bottom: 70px;
 }
-
 .rocketLobbySection h5 {
   animation: heartbeat 1s infinite;
   color: var(--red);
@@ -514,22 +487,22 @@ div.flex:nth-child(4) > div:nth-child(2) {
   background-color: var(--yellow);
   font-size: 1rem;
   color: var(--red);
+  font-weight: bold;
   border: none;
   cursor: pointer;
   transition: 0.5s;
 }
 .submitButton:hover,
 .submitButton:focus {
-  background-color: #f5b63a;
-  font-weight: bold;
+  background-color: #fcdd49;
 }
-
 div.flex:nth-child(3) > div:nth-child(3) {
   margin-left: 22px;
 }
 div.flex:nth-child(2) > div:nth-child(3) {
   margin-left: 20px;
 }
+/* rocket lobby waiting for players screen */
 .rocketLobbyWaiting {
   margin-top: 5rem;
   border: 5px solid var(--blue);
@@ -669,6 +642,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
     font-size: 4.5rem;
   }
 }
+/*  */
 /*  */
 /* Gameboard styling */
 .gameBackground {

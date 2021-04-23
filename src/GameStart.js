@@ -59,9 +59,9 @@ function GameStart(props) {
       {/* for playerOne (or ths first person to show up), show this screen */}
       {!playerOne && (
         <>
-          <section className="gameStartSection">
+          <section className="gameStartSection flexColumnCenter">
             <h1>Battle Rockets</h1>
-            <div className="gameStartContainer wrapper">
+            <div className="gameStartContainer flexColumnCenter wrapper">
               <h2>Let's play a game!</h2>
               <h2>Enter your name to start</h2>
               <label className="visually-hidden" for="playerone">
