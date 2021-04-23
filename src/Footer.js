@@ -1,5 +1,6 @@
-import junoLogo from "./images/junoLogo.jpg";
 import "./App.css";
+
+import junoLogo from "./images/junoLogo.jpg";
 
 function Footer() {
   return (

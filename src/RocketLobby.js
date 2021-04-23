@@ -1,14 +1,14 @@
-import firebase from "./firebase";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import Navbar from "./Navbar";
+import firebase from "./firebase";
+import axios from "axios";
 import placeRockets from "./placerockets";
 
-import rocket1 from "./images/rocket-1.png";
-import rocket2 from "./images/rocket-2.png";
-import rocket3 from "./images/rocket-3.png";
+import Navbar from "./Navbar";
+
+import rocket1 from "./images/rocket1.png";
+import rocket2 from "./images/rocket2.png";
+import rocket3 from "./images/rocket3.png";
 
 function Rockets({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
@@ -142,8 +142,7 @@ function Rockets({ data, localToken }) {
       }
     }
   }, [allPlayersReady, whichPlayer, history]);
-  //
-  // THE RETURN
+
   return (
     <>
       <Navbar />
@@ -161,6 +160,12 @@ function Rockets({ data, localToken }) {
                   return (
                     <div key={index} className="flex">
                       <div>
+                        <label
+                          className="visually-hidden"
+                          htmlFor={singleRocket.rocket_id}
+                        >
+                          {singleRocket.rocket_name}
+                        </label>
                         <input
                           disabled={maxSelectionReach}
                           type="checkbox"
@@ -180,12 +185,6 @@ function Rockets({ data, localToken }) {
                       </div>
 
                       <div className="textDiv">
-                        <label
-                          className="visually-hidden"
-                          htmlFor={singleRocket.rocket_id}
-                        >
-                          {singleRocket.rocket_name}
-                        </label>
                         <h4 className="rocketTitle">
                           {singleRocket.rocket_name}
                         </h4>

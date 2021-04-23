@@ -1,7 +1,8 @@
-import "./App.css";
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
 import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+
+import "./App.css";
 
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
@@ -14,36 +15,37 @@ function App() {
   const [localAssignedToken, setLocalAssignedToken] = useState("");
   const history = useHistory();
 
-  //pull from firebase what's there (runs when token is assigned)
+  //pull from firebase what's in therethere
   useEffect(() => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
       setData(response.val());
     });
   }, []);
+
   const { playerOne, playerTwo } = data;
 
-  // button for clearing firebase and reset game.
+  // button for clearing firebase, reset game and return to home screen
   const removeEverything = () => {
     firebase.database().ref("playerOne").set(false);
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
     firebase.database().ref("turn").set("playerOne");
   };
-  //capture the local token number
+
+  //capture the local token number for player
   function captureTheToken(localToken) {
     setLocalAssignedToken(localToken);
   }
 
-  //THE RETURN
   return (
     <Router>
-      <div>
+      <div className="wrapper">
         {/* Button for resetting the game */}
         <div className="starAbortContainer">
           <img
             src={star}
-            alt="cartoon star"
+            alt="cartoon star icon"
             className="starAbort"
             onClick={() => {
               removeEverything();
