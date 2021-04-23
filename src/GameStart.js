@@ -64,7 +64,7 @@ function GameStart(props) {
             <div className="gameStartContainer flexColumnCenter wrapper">
               <h2>Let's play a game!</h2>
               <h2>Enter your name to start</h2>
-              <label className="visually-hidden" for="playerone">
+              <label className="visually-hidden" htmlFor="playerone">
                 enter player one
               </label>
               <input
@@ -96,7 +96,7 @@ function GameStart(props) {
             <div className="gameStartContainer wrapper">
               <h2>Player One has already entered the game.</h2>
               <h2>Waiting for player two...</h2>
-              <label className="visually-hidden" for="playertwo">
+              <label className="visually-hidden" htmlFor="playertwo">
                 enter player two
               </label>
               <input
