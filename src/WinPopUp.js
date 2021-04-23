@@ -22,7 +22,7 @@ function WinPopUp({data}) {
               removeEverything();
               history.push("/");
               window.location.reload(false);
-            }}>Play Again!</button>
+            }}>Go Back Home!</button>
       </form>
     </div>
   );

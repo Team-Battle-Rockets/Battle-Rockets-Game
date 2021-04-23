@@ -1,15 +1,13 @@
 import firebase from "./firebase";
+import Navbar from "./Navbar";
+import placeRockets from "./placerockets";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import Navbar from "./Navbar";
-import placeRockets from "./placerockets";
-
-import rocket1 from "./images/rocket-1.png";
-import rocket2 from "./images/rocket-2.png";
-import rocket3 from "./images/rocket-3.png";
-
+import falcon1 from "./images/falcon1.png";
+import falcon9 from "./images/falcon9.png";
+import falconHeavy from "./images/falconHeavy.png";
+import starship from "./images/starship.png";
 function Rockets({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
   const [rocketSelected, setRocketSelected] = useState([]);
@@ -17,7 +15,6 @@ function Rockets({ data, localToken }) {
   const [userName, setUserName] = useState("");
   const [hideForm, setHideForm] = useState(false);
   const history = useHistory();
-
   //api call to SpaceX to get the different rocket types
   useEffect(() => {
     axios({
@@ -28,29 +25,30 @@ function Rockets({ data, localToken }) {
     })
       //adding in our own key:value to assign images base on the height value of the individual object items
       .then((res) => {
-        const rocketHeight = res.data.map((rHeight) => {
-          const singleRocketHeight = rHeight.height.meters;
-          let orientation = rocket3;
-          if (singleRocketHeight > 100) {
-            orientation = rocket1;
-          } else if (singleRocketHeight > 50) {
-            orientation = rocket2;
+        const rocketWeight = res.data.map((rWeight) => {
+          const singleRocketWeight = rWeight.mass.kg;
+          console.log(singleRocketWeight)
+          let weight = falconHeavy;
+          if (singleRocketWeight < 100000) {
+            weight = falcon1;
+          } else if (singleRocketWeight < 800000) {
+            weight = falcon9;
+          } else if (singleRocketWeight < 1400000) {
+            weight = starship;
           } else {
-            orientation = rocket3;
           }
           return {
-            ...rHeight,
-            orientation: orientation,
+            ...rWeight,
+            weight: weight,
           };
         });
-        setRocket(rocketHeight);
+        setRocket(rocketWeight);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
-  //determine whichPlayer in order to submit the rocket selection to the appropriate branch in firebase
+  //determine which player in order to submit the rocket selection to the appropriate branch in firebase
   //also capture user name to display on screen
   useEffect(() => {
     if (localToken) {
@@ -66,7 +64,6 @@ function Rockets({ data, localToken }) {
       }
     }
   }, [data, localToken]);
-
   //captures the selected rockets, put them in an array for push to firebase once all selections are made
   const maxSelectionReach = rocketSelected.length === 3;
   const handleRocketSelected = (value) => {
@@ -108,7 +105,6 @@ function Rockets({ data, localToken }) {
     }
     setRocketSelected([...rocketSelected, rocketDetails]);
   };
-
   //onClick will push the rockets selected to firebase (depending on user of course)
   let areWeReady = false;
   const rocketSelectionSubmit = (e) => {
@@ -124,12 +120,11 @@ function Rockets({ data, localToken }) {
           rocketSelected[1].size +
           rocketSelected[2].size,
       });
-    //running the placeRockets with a timeout to have enought time to complete operation before the next one runs.
     setTimeout(() => placeRockets(rocketSelected[0], whichPlayer), 500);
     setTimeout(() => placeRockets(rocketSelected[1], whichPlayer), 1000);
     setTimeout(() => placeRockets(rocketSelected[2], whichPlayer), 1500);
+    areWeReady = true;
   };
-
   //determine whether firebase has received all the information from both players before proceeding to the gameBoard
   const allPlayersReady =
     data.playerOne.rocketSelected && data.playerTwo.rocketSelected;
@@ -142,7 +137,7 @@ function Rockets({ data, localToken }) {
         history.push("/GameBoardTwo");
       }
     }
-  }, [allPlayersReady, whichPlayer, history]);
+  }, [allPlayersReady]);
   //
   // THE RETURN
   return (
@@ -154,9 +149,7 @@ function Rockets({ data, localToken }) {
           {!hideForm && (
             <>
               <h2>Welcome, {userName}!</h2>
-
               <h3>Please Choose Three Rockets As Your Game Pieces</h3>
-              {/* form with all of the rockets */}
               <form className="style grid-container">
                 {rocket.map((singleRocket, index) => {
                   return (
@@ -175,11 +168,10 @@ function Rockets({ data, localToken }) {
                       <div className="rocketImageSize">
                         <img
                           className="rocketImages"
-                          src={singleRocket.orientation}
+                          src={singleRocket.weight}
                           alt={singleRocket.rocket_name}
                         />
                       </div>
-
                       <div className="textDiv">
                         <label
                           className="visually-hidden"
@@ -204,15 +196,14 @@ function Rockets({ data, localToken }) {
                     </div>
                   );
                 })}
-
-                {/* waiting for players to chose 3 rockets before allowing to continue */}
+                {/* waiting for players notice start */}
                 {!maxSelectionReach && (
                   <>
                     <h5>Please make your ship selections</h5>
                   </>
                 )}
-
-                {/* playerOne submit selections  */}
+                {/* waiting for players notice end */}
+                {/* playerOne submit selections start */}
                 {whichPlayer === "playerOne" && maxSelectionReach && (
                   <>
                     <button
@@ -225,8 +216,8 @@ function Rockets({ data, localToken }) {
                     </button>
                   </>
                 )}
-
-                {/* playerTwo submit selections  */}
+                {/* playerOne submit selections start */}
+                {/* playerTwo submit selections start */}
                 {whichPlayer === "playerTwo" && maxSelectionReach && (
                   <button
                     className="submitButton"
@@ -237,10 +228,10 @@ function Rockets({ data, localToken }) {
                     Click Here to Start the Game
                   </button>
                 )}
+                {/* playerTwo submit selections end */}
               </form>
             </>
           )}
-          {/* Will notify players that the other player needs to make their selections before the game came begin. */}
           {!allPlayersReady && hideForm && (
             <div className="rocketLobbyWaiting">
               <h2>
@@ -248,7 +239,7 @@ function Rockets({ data, localToken }) {
               </h2>
               <h3>
                 You will be automatically taken to the game board when both
-                sides are ready to play!
+                sides are ready to
               </h3>
             </div>
           )}
@@ -257,5 +248,4 @@ function Rockets({ data, localToken }) {
     </>
   );
 }
-
 export default Rockets;

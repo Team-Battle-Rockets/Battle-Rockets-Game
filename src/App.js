@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
 
 import GameStart from "./GameStart";
 import RocketLobby from "./RocketLobby";
-import GameBoard from "./GameBoard";
 
 import star from "./images/star.png";
 import GameBoard from "./GameBoard";
