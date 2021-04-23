@@ -6,9 +6,10 @@ import placeRockets from "./placerockets";
 
 import Navbar from "./Navbar";
 
-import rocket1 from "./images/rocket1.png";
-import rocket2 from "./images/rocket2.png";
-import rocket3 from "./images/rocket3.png";
+import falcon1 from "./images/falcon1.png";
+import falcon9 from "./images/falcon9.png";
+import falconHeavy from "./images/falconHeavy.png";
+import starship from "./images/starship.png";
 
 function Rockets({ data, localToken }) {
   const [rocket, setRocket] = useState([]);
@@ -28,22 +29,24 @@ function Rockets({ data, localToken }) {
     })
       //adding in our own key:value to assign images base on the height value of the individual object items
       .then((res) => {
-        const rocketHeight = res.data.map((rHeight) => {
-          const singleRocketHeight = rHeight.height.meters;
-          let orientation = rocket3;
-          if (singleRocketHeight > 100) {
-            orientation = rocket1;
-          } else if (singleRocketHeight > 50) {
-            orientation = rocket2;
+        const rocketWeight = res.data.map((rWeight) => {
+          const singleRocketWeight = rWeight.mass.kg;
+          console.log(singleRocketWeight);
+          let weight = falconHeavy;
+          if (singleRocketWeight < 100000) {
+            weight = falcon1;
+          } else if (singleRocketWeight < 800000) {
+            weight = falcon9;
+          } else if (singleRocketWeight < 1400000) {
+            weight = starship;
           } else {
-            orientation = rocket3;
           }
           return {
-            ...rHeight,
-            orientation: orientation,
+            ...rWeight,
+            weight: weight,
           };
         });
-        setRocket(rocketHeight);
+        setRocket(rocketWeight);
       })
       .catch((error) => {
         console.log(error);
@@ -179,7 +182,7 @@ function Rockets({ data, localToken }) {
                       <div className="rocketImageSize">
                         <img
                           className="rocketImages"
-                          src={singleRocket.orientation}
+                          src={singleRocket.weight}
                           alt={singleRocket.rocket_name}
                         />
                       </div>

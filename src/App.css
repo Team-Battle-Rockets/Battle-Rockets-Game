@@ -349,6 +349,7 @@ footer {
 .gameStartSection {
   height: 92vh;
   background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
+  text-align: center;
 }
 .gameStartSection h1 {
   font-family: var(--fontHeading);
@@ -374,9 +375,11 @@ footer {
 .gameStartContainer h2 {
   color: var(--white);
 }
-.gameStartContainer button {
+.gameStartContainer button,
+.winButt {
+  font-family: var(--fontHeading);
   color: var(--white);
-  font-weight: bold;
+  font-size: 1.7rem;
   background-color: var(--red);
   border-radius: 5px;
   border: transparent;
@@ -385,8 +388,10 @@ footer {
   transition: 0.5;
 }
 .gameStartContainer button:hover,
-.gameStartContainer button:focus {
-  background-color: #850000;
+.gameStartContainer button:focus,
+.winButt:hover,
+.winButt:focus {
+  background-color: #ac1313;
   cursor: pointer;
   transform: scale(1.1);
 }
@@ -432,6 +437,7 @@ input[type="checkbox"] {
   font-size: 1rem;
   margin: 5px;
   line-height: 1.6;
+  background-color: lightcoral;
 }
 .rocketLobbySection span {
   font-weight: bold;
@@ -478,9 +484,11 @@ input[type="checkbox"] {
 div.flex:nth-child(3) > div:nth-child(2),
 div.flex:nth-child(1) > div:nth-child(2) {
   width: 500px;
+  background-color: hotpink;
 }
 div.flex:nth-child(4) > div:nth-child(2) {
   width: 600px;
+  background-color: indianred;
 }
 .submitButton {
   grid-area: 3 / span 2;
@@ -500,9 +508,11 @@ div.flex:nth-child(4) > div:nth-child(2) {
 }
 div.flex:nth-child(3) > div:nth-child(3) {
   margin-left: 22px;
+  background-color: indigo;
 }
 div.flex:nth-child(2) > div:nth-child(3) {
   margin-left: 20px;
+  background-color: lawngreen;
 }
 /* rocket lobby waiting for players screen */
 .rocketLobbyWaiting {
@@ -521,10 +531,10 @@ div.flex:nth-child(2) > div:nth-child(3) {
 /* Media query  */
 @media (max-width: 900px) {
   .rocketLobbySection h5 {
-    font-size: 22px;
-    left: 150px;
+    font-size: 2.5rem;
   }
 }
+
 @media (max-width: 840px) {
   section.gameStartSection h1 {
     font-size: 6.5rem;
@@ -538,7 +548,11 @@ div.flex:nth-child(2) > div:nth-child(3) {
   div.gameStartContainer input[type="text"] {
     min-width: 250px;
   }
+  .footerSection img {
+    height: 40px;
+  }
 }
+
 @media (max-width: 700px) {
   .navbarSection h1 {
     font-size: 3rem;
@@ -571,20 +585,27 @@ div.flex:nth-child(2) > div:nth-child(3) {
     width: 100%;
   }
 }
+
 @media (max-width: 640px) {
-  section.gameStartSection h1 {
-    font-size: 5.5rem;
-    margin-left: 16px;
+  .gameStartSection h1 {
+    font-size: 4.3rem;
   }
-  div.gameStartContainer {
+  .gameStartContainer {
     width: 60%;
     margin-top: 40px;
   }
-  div.gameStartContainer button {
-    margin-top: 8px;
-    padding: 6px 17px;
+  footer {
+    height: fit-content;
+  }
+  .footerSection {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
   }
 }
+
 @media (max-width: 540px) {
   .redText {
     font-size: 9px;
@@ -645,7 +666,9 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 /*  */
 /*  */
+
 /* Gameboard styling */
+
 .gameBackground {
   text-align: center;
   background-image: linear-gradient(90deg, var(--red) 50%, var(--blue) 50%);
@@ -675,7 +698,8 @@ div.flex:nth-child(2) > div:nth-child(3) {
 .mirrorPlayerTwo {
   background-image: url("./images/buttonBackground.png");
 }
-.playerName {
+.playerName,
+.win {
   color: var(--yellow);
   text-shadow: 5px 5px 0px var(--black);
   font-family: var(--fontHeading);
@@ -683,6 +707,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   font-size: 2.5rem;
   padding-top: 30px;
 }
+
 .whosBoard {
   font-family: var(--fontBody);
   font-size: 1.5rem;
@@ -716,18 +741,27 @@ div.flex:nth-child(2) > div:nth-child(3) {
   width: 20px;
   height: 20px;
 }
-.hidden {
-  display: none;
+
+.winPop {
+  position: absolute;
+  padding: 30px;
+  width: 80%;
+  left: 50%;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
 }
-.win,
-.hit,
-.miss {
-  color: white;
-  margin: 0;
-}
+
 @media (max-width: 840px) {
   .container {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .winButt {
+    font-size: 1.3rem;
   }
 }
