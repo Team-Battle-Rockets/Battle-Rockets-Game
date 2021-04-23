@@ -6,10 +6,10 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import WinPopUp from "./WinPopUp";
 // adding images for tokens in grid
-import falcon1 from "./images/falcon1.svg";
-import falcon9 from "./images/falcon9.svg";
-import falconHeavy from "./images/falconHeavy.svg";
-import starship from "./images/starship.svg";
+import falcon1Tile from "./images/falcon1Tile.png";
+import falcon9Tile from "./images/falcon9Tile.png";
+import falconHeavyTile from "./images/falconHeavyTile.png";
+import starshipTile from "./images/starshipTile.png";
 
 function GameBoard({ data, localToken }) {
   // initializing stateful variables for the player Grids.
@@ -196,13 +196,13 @@ function GameBoard({ data, localToken }) {
                         const cellValue =
                           value === 0 ? null 
                           : value === "Falcon 1" ? (
-                            <img src={falcon1} alt="Falcon 1 rocket"></img>
+                            <img src={falcon1Tile} alt="Falcon 1 rocket"></img>
                           ) : value === "Falcon 9" ? (
-                            <img src={falcon9} alt="Falcon 1 rocket"></img>
+                            <img src={falcon9Tile} alt="Falcon 9 rocket"></img>
                           ) : value === "Falcon Heavy" ? (
-                            <img src={falconHeavy} alt="Falcon 1 rocket"></img>
+                            <img src={falconHeavyTile} alt="Falcon Heavy rocket"></img>
                           ) : value === "Starship" ? (
-                            <img src={starship} alt="Falcon 1 rocket"></img>
+                            <img src={starshipTile} alt="Starship rocket"></img>
                           ) : (
                             value
                           );
@@ -270,18 +270,18 @@ function GameBoard({ data, localToken }) {
                       {boardPlayerTwo.map((value, index) => {
                         // these ternary operators ensure that the grid displays hit and miss markers, as well as rocket markers based on the rocket selections the user made.
                         const cellValue =
-                          value === 0 ? null 
-                          : value === "Falcon 1" ? (
-                            <img src={falcon1} alt="Falcon 1 rocket"></img>
-                          ) : value === "Falcon 9" ? (
-                            <img src={falcon9} alt="Falcon 1 rocket"></img>
-                          ) : value === "Falcon Heavy" ? (
-                            <img src={falconHeavy} alt="Falcon 1 rocket"></img>
-                          ) : value === "Starship" ? (
-                            <img src={starship} alt="Falcon 1 rocket"></img>
-                          ) : (
-                            value
-                          );
+                        value === 0 ? null 
+                        : value === "Falcon 1" ? (
+                          <img src={falcon1Tile} alt="Falcon 1 rocket"></img>
+                        ) : value === "Falcon 9" ? (
+                          <img src={falcon9Tile} alt="Falcon 9 rocket"></img>
+                        ) : value === "Falcon Heavy" ? (
+                          <img src={falconHeavyTile} alt="Falcon Heavy rocket"></img>
+                        ) : value === "Starship" ? (
+                          <img src={starshipTile} alt="Starship rocket"></img>
+                        ) : (
+                          value
+                        );
                         return (
                           <button key={index} value={boardPlayerTwo[index]}>
                             {cellValue}

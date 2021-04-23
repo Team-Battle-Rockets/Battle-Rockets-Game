@@ -684,8 +684,8 @@ div.flex:nth-child(2) > div:nth-child(3) {
 .boardPlayerTwo,
 .mirrorPlayerOne,
 .mirrorPlayerTwo {
-  width: 280px;
-  height: 280px;
+  width: 245px;
+  height: 245px;
   display: flex;
   flex-wrap: wrap;
   margin: 20px;
@@ -726,11 +726,16 @@ div.flex:nth-child(2) > div:nth-child(3) {
   color: white;
 }
 .grid button {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border: 1px solid azure;
   background-color: transparent;
 }
+
+.grid button img {
+  max-width: 100%;
+}
+
 .grid button:hover {
   background-color: grey;
   color: grey;
