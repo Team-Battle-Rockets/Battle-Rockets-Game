@@ -701,8 +701,8 @@ div.flex:nth-child(2) > div:nth-child(3) {
 .boardPlayerTwo,
 .mirrorPlayerOne,
 .mirrorPlayerTwo {
-  width: 308px;
-  height: 308px;
+  min-width: 308px;
+  min-height: 308px;
   display: flex;
   flex-wrap: wrap;
   margin: 20px;
@@ -784,6 +784,14 @@ div.flex:nth-child(2) > div:nth-child(3) {
     flex-direction: column;
     align-items: center;
   }
+
+  .boardPlayerOne,
+  .boardPlayerTwo,
+  .mirrorPlayerOne,
+  .mirrorPlayerTwo {
+    max-width: 308px;
+    max-height: 308px;
+  }
 }
 
 @media (max-width: 410px) {
@@ -796,4 +804,13 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .winButt {
     font-size: 1.3rem;
   }
+
+  .boardPlayerOne,
+  .boardPlayerTwo,
+  .mirrorPlayerOne,
+  .mirrorPlayerTwo {
+    min-width: 308px;
+    min-height: 308px;
+  }
+
 }
