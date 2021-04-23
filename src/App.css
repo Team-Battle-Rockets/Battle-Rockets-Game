@@ -1,10 +1,15 @@
-/* Homepage */
-/* Media Query Home Page */
-/* RocketLobby styling */
-/* Gameboard styling */
-/* NavBar Styling */
-/* Footer styling  */
-/* Media query*/
+/* 
+- imports & variables
+- setup snippet
+- general style, shared styles 
+- navbar styles
+- footer styles
+- game start component
+- rocket lobby component
+- rocket lobby waiting area styling
+- game board styling
+- media queries
+*/
 
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;900&family=Teko:wght@500&display=swap");
 :root {
@@ -263,6 +268,8 @@ template {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; /* added line */
 }
+
+/* general & shared styles */
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -277,8 +284,6 @@ template {
 a {
   text-decoration: none;
 }
-
-/* Homepage */
 .starAbortContainer {
   z-index: 10;
   position: absolute;
@@ -294,6 +299,7 @@ a {
 .starAbort:focus {
   transform: scale(1.2);
 }
+
 /* NavBar styling */
 .navbarSection {
   height: 120px;
@@ -339,8 +345,7 @@ footer {
   color: var(--red);
   padding-left: 10px;
 }
-
-/* game start section */
+/* Game Start section */
 .gameStartSection {
   height: 92vh;
   background-image: linear-gradient(147deg, var(--blue) 50%, var(--red) 50%);
@@ -408,7 +413,6 @@ input[type="checkbox"] {
   width: 30px;
   height: 30px;
 }
-
 .rocketImages {
   width: 100%;
 }
@@ -451,7 +455,6 @@ input[type="checkbox"] {
   text-align: center;
   grid-area: 3 / span 2;
 }
-
 @keyframes heartbeat {
   0% {
     transform: scale(0.8);
@@ -472,7 +475,6 @@ input[type="checkbox"] {
     transform: scale(1);
   }
 }
-
 div.flex:nth-child(3) > div:nth-child(2),
 div.flex:nth-child(1) > div:nth-child(2) {
   width: 500px;
@@ -507,7 +509,6 @@ div.flex:nth-child(2) > div:nth-child(3) {
   margin-top: 5rem;
   border: 5px solid var(--blue);
   border-radius: 3px;
-  margin-bottom: 30px;
 }
 .rocketLobbyWaiting h2 {
   font-size: 3rem;
