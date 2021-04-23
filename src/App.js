@@ -31,6 +31,8 @@ function App() {
     firebase.database().ref("playerTwo").set(false);
     firebase.database().ref("isGameOver").set(false);
     firebase.database().ref("turn").set("playerOne");
+    firebase.database().ref("status").set(null);
+    firebase.database().ref("winner").set("");
   };
 
   //capture the local token number for player
@@ -40,7 +42,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div className="wrapper">
         {/* Button for resetting the game */}
         <div className="starAbortContainer">
           <img
