@@ -309,6 +309,7 @@ a {
 footer {
   font-family: var(--fontBody);
   background-color: var(--black);
+  color: var(--white);
 }
 .footerSection {
   height: 8vh;
@@ -328,14 +329,18 @@ footer {
   justify-content: flex-start;
   align-items: center;
 }
-.yellowText {
-  color: var(--yellow);
+
+.footerText,
+.footerText a {
+  color: var(--white);
   padding-left: 10px;
+  transition: 0.3s;
+  flex-wrap: wrap;
 }
-.redText,
-.footerSection p {
-  color: var(--red);
-  padding-left: 10px;
+.footerText a:hover,
+.footerText a:focus {
+  color: var(--yellow);
+  transform: scale(1.1);
 }
 /* Game Start section */
 .gameStartSection {
@@ -377,7 +382,7 @@ footer {
   border: transparent;
   margin-top: 20px;
   padding: 15px 25px;
-  transition: 0.5;
+  transition: 0.3s;
 }
 .gameStartContainer button:hover,
 .gameStartContainer button:focus,
@@ -495,7 +500,7 @@ div.flex:nth-child(4) > div:nth-child(2) {
   font-weight: bold;
   border: none;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 0.7s;
 }
 .submitButton:hover,
 .submitButton:focus {
@@ -571,21 +576,8 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .rocketLobbySection h5 {
     font-size: 19px;
   }
-  .redText {
-    font-size: 14px;
-  }
   .submitButton {
     width: 100%;
-  }
-}
-
-@media (max-width: 640px) {
-  .gameStartSection h1 {
-    font-size: 4.3rem;
-  }
-  .gameStartContainer {
-    width: 60%;
-    margin-top: 40px;
   }
   footer {
     height: fit-content;
@@ -597,12 +589,22 @@ div.flex:nth-child(2) > div:nth-child(3) {
     align-items: center;
     padding-top: 20px;
   }
+  .footerSection img {
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .gameStartSection h1 {
+    font-size: 4.3rem;
+  }
+  .gameStartContainer {
+    width: 60%;
+    margin-top: 40px;
+  }
 }
 
 @media (max-width: 540px) {
-  .redText {
-    font-size: 9px;
-  }
   .grid-container {
     grid-template-columns: 98%;
   }
@@ -615,32 +617,21 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .rocketImages {
     width: 77%;
   }
-}
-@media (max-width: 385px) {
-  .redText {
-    font-size: 7px;
+  .footerSection {
+    padding: 15px 15px;
   }
 }
+
 @media (max-width: 360px) {
   .textDiv p {
     font-size: 14px;
   }
 
-  .footerSection img {
-    height: 2vh;
-  }
-  footer {
-    height: 1vh;
-    padding-bottom: 54px;
-  }
   .rocketLobbySection h3 {
     font-size: 17px;
   }
   .rocketLobbySection h5 {
     font-size: 15px;
-  }
-  p.Tittle {
-    font-size: 25px;
   }
   .navbarSection h1 {
     font-size: 2rem;
