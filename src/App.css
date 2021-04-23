@@ -743,8 +743,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 .mirrorPlayerOne button {
   color: white;
 }
-.grid button,
-.grid div {
+.grid button  {
   width: 44px;
   height: 44px;
   border: 1px solid azure;
