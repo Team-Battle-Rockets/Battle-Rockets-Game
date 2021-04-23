@@ -335,7 +335,6 @@ footer {
   color: var(--white);
   padding-left: 10px;
   transition: 0.3s;
-  flex-wrap: wrap;
 }
 .footerText a:hover,
 .footerText a:focus {
@@ -534,7 +533,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 
 @media (max-width: 840px) {
-  section.gameStartSection h1 {
+  .ågameStartSection h1 {
     font-size: 6.5rem;
   }
   h2 {
@@ -611,7 +610,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 
 @media (max-width: 500px) {
-  div.gameStartContainer {
+  .gameStartContainer {
     width: 90%;
   }
   .rocketImages {
@@ -623,10 +622,12 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 
 @media (max-width: 360px) {
+  .gameStartSection h1 {
+    padding-top: 60px;
+  }
   .textDiv p {
     font-size: 14px;
   }
-
   .rocketLobbySection h3 {
     font-size: 17px;
   }
@@ -639,19 +640,20 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .rocketLobbySection h2 {
     font-size: 39px;
   }
-  .submitButton {
-    font-size: 13px;
+  footer {
+    text-align: center;
+    font-size: 18px;
+  }
+  .footerText {
+    word-break: break-word;
   }
 }
 @media (max-width: 320px) {
-  section.gameStartSection h1 {
-    font-size: 4.5rem;
-  }
 }
 /*  */
 /*  */
 
-/* Gameboard styling */
+/* * Gameboard styling */
 
 .gameBackground {
   text-align: center;
@@ -696,6 +698,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   font-family: var(--fontBody);
   font-size: 1.5rem;
   color: var(--yellow);
+  padding-top: 20px;
 }
 .whosBoardText {
   padding-top: 10px;
@@ -728,7 +731,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 
 .winPop {
   position: absolute;
-  padding: 30px;
+  padding: 50px 30px;
   width: 80%;
   left: 50%;
   top: 50%;
@@ -736,11 +739,22 @@ div.flex:nth-child(2) > div:nth-child(3) {
   transform: translate(-50%, -50%);
   border-radius: 5px;
 }
+@media (max-width: 868px) {
+  .whosBoardText {
+    font-size: 0.8rem;
+  }
+}
 
 @media (max-width: 840px) {
   .container {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 410px) {
+  .winPop {
+    width: 95%;
   }
 }
 
