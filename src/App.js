@@ -42,7 +42,7 @@ function App() {
 
   return (
     <Router>
-      <div className="wrapper">
+      <div>
         {/* Button for resetting the game */}
         <div className="starAbortContainer">
           <img
