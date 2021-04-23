@@ -39,7 +39,7 @@ function Footer() {
           </p>
         </div>
         <div>
-          <p>Created at Juno College</p>
+          <p className="redText">Created at Juno College</p>
           <a href="http://www.junocollege.com" target="_blank" rel="noreferrer">
             <img src={junoLogo} alt="Juno College of Technology Company Logo" />
           </a>

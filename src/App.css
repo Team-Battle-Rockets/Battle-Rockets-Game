@@ -404,6 +404,7 @@ footer {
 .rocketLobbySection h2,
 .rocketLobbySection h3 {
   text-align: center;
+  padding: 40px;
 }
 .rocketLobbySection h2 {
   font-family: var(--fontHeading);
@@ -428,6 +429,7 @@ input[type="checkbox"] {
 .rocketTitle {
   font-family: var(--fontHeading);
   font-size: 30px;
+  margin-left: 4px;
 }
 input[type="submit"] {
   position: relative;
@@ -543,18 +545,10 @@ div.flex:nth-child(2) > div:nth-child(3) {
 }
 
 /* Media query  */
-@media (max-width: 1060px) {
-  .submitButton {
-    left: 430px;
-  }
-}
 @media (max-width: 900px) {
-  h5 {
+  .rocketLobbySection h5 {
     font-size: 22px;
     left: 150px;
-  }
-  .submitButton {
-    left: 300px;
   }
 }
 @media (max-width: 840px) {
@@ -579,35 +573,34 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .starAbort {
     width: 36px;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 52px;
     margin-top: 67px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 25px;
   }
   .grid-container {
     grid-template-columns: 93%;
+    display: initial;
   }
   .rocket1 {
     width: 81%;
   }
-  div h5 {
-    left: initial;
+  .rocketLobbySection h5 {
     font-size: 19px;
   }
-  .red p {
+  .redText {
     font-size: 14px;
   }
   .submitButton {
-    left: 150px;
-    padding: 9px 19px;
-    font-size: 15px;
+    width: 100%;
   }
 }
 @media (max-width: 640px) {
   section.gameStartSection h1 {
     font-size: 5.5rem;
+    margin-left:16px;
   }
   div.gameStartContainer {
     width: 60%;
@@ -619,17 +612,11 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 540px) {
-  .red p {
+  .redText {
     font-size: 9px;
   }
   .grid-container {
     grid-template-columns: 98%;
-  }
-  .flex {
-    margin: 3px;
-  }
-  .textDiv {
-    margin-left: initial;
   }
 }
 
@@ -637,14 +624,13 @@ div.flex:nth-child(2) > div:nth-child(3) {
   div.gameStartContainer {
     width: 90%;
   }
+  .rocketImages {
+    width: 77%;
+    }
 }
 @media (max-width: 385px) {
-  .red p {
+  .redText {
     font-size: 7px;
-  }
-  .submitButton {
-    left: 88px;
-    top: 43px;
   }
 }
 @media (max-width: 360px) {
@@ -659,10 +645,10 @@ div.flex:nth-child(2) > div:nth-child(3) {
     height: 1vh;
     padding-bottom: 54px;
   }
-  h3 {
+  .rocketLobbySection h3 {
     font-size: 17px;
   }
-  div h5 {
+  .rocketLobbySection h5 {
     font-size: 15px;
   }
   p.Tittle {
@@ -671,7 +657,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   .navbarSection h1 {
     font-size: 2rem;
   }
-  .welcomeText {
+  .rocketLobbySection h2 {
     font-size: 39px;
   }
   .submitButton {
@@ -679,7 +665,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
 }
 @media (max-width: 320px) {
-  div.gameStartSection h1 {
+  section.gameStartSection h1 {
     font-size: 4.5rem;
   }
 }
