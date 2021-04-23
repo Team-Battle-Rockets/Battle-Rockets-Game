@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import firebase from "./firebase";
 
-import { withRouter } from "react-router-dom";
 import Footer from "./Footer";
 
 function GameStart(props) {
@@ -11,9 +11,8 @@ function GameStart(props) {
   const [playerTwoName, setPlayerTwoName] = useState("");
   const [token, setToken] = useState(null);
 
-  //create a token when component first mounts (borrowed from somewhere off the internet)
+  //create a unique token when component first mounts (borrowed from somewhere off the internet)
   useEffect(() => {
-    //generate a token, borrowed from somewhere off the internet
     function create_UUID() {
       var dt = new Date().getTime();
       var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
@@ -28,13 +27,15 @@ function GameStart(props) {
     }
     setToken(create_UUID());
   }, []);
-  //handleClick, to confirm when players are ready by capturing their name and assigned token & creating the structure of the database for gameplay
+
+  //handleClick to confirm when players are ready by capturing their name, their assigned token & creating the structure of the database for gameplay
   const handleIsPlayerReady = (player, playerNumber) => {
     firebase.database().ref().child(playerNumber).set({
       name: player,
       token: token,
     });
   };
+
   //captures text input for user name
   const handleChange = (event, playerNumber) => {
     if (playerNumber === "one") {
@@ -44,23 +45,30 @@ function GameStart(props) {
       setPlayerTwoName(event.target.value);
     }
   };
-  //variable to determine if playerOne exists in firebase AND that the tokens match from firebase and local state
+
+  //variable to determine if playerOne exists in firebase AND that the tokens match from firebase and local state (used to route player one and player two to different areas)
   const isPlayerOne = playerOne && playerOne.token === token;
 
   //given time for states to set before component unmounts and goes to next
   const delayForUnmount = () => {
-    setTimeout(() => props.history.push("/RocketLobbyTwo"), 200);
+    setTimeout(() => props.history.push("/RocketLobbyTwo"), 150);
   };
+
   return (
     <>
+      {/* for playerOne (or ths first person to show up), show this screen */}
       {!playerOne && (
         <>
-          <section className="gameStartSection">
+          <section className="gameStartSection flexColumnCenter">
             <h1>Battle Rockets</h1>
-            <div className="gameStartContainer wrapper">
+            <div className="gameStartContainer flexColumnCenter wrapper">
               <h2>Let's play a game!</h2>
               <h2>Enter your name to start</h2>
+              <label className="visually-hidden" htmlFor="playerone">
+                enter player one
+              </label>
               <input
+                id="playerone"
                 type="text"
                 onChange={(event) => handleChange(event, "one")}
                 value={playerOneName}
@@ -74,15 +82,13 @@ function GameStart(props) {
                 }}
               >
                 Player One START
-                {/* <Link to="/RocketLobbyOne">Player One START</Link>  */}
               </button>
-              {/* <button onClick={newClickStuff}>new button</button> */}
             </div>
           </section>
           <Footer />
         </>
       )}
-      {/* Once player one has entered, page will ask for player two to enter */}
+      {/* Once playerOne has entered, page will ask for player two to enter */}
       {playerOne && !isPlayerOne && (
         <>
           <section className="gameStartSection">
@@ -90,8 +96,11 @@ function GameStart(props) {
             <div className="gameStartContainer wrapper">
               <h2>Player One has already entered the game.</h2>
               <h2>Waiting for player two...</h2>
-
+              <label className="visually-hidden" htmlFor="playertwo">
+                enter player two
+              </label>
               <input
+                id="playertwo"
                 type="text"
                 onChange={(event) => handleChange(event, "two")}
                 value={playerTwoName}
@@ -105,7 +114,6 @@ function GameStart(props) {
                 }}
               >
                 Player Two START
-                {/* <Link to="/RocketLobbyTwo"></Link> */}
               </button>
             </div>
           </section>

@@ -1,4 +1,6 @@
 import firebase from "./firebase";
+
+//blank player boards
 const boards = {
   playerOne: [
     0,
