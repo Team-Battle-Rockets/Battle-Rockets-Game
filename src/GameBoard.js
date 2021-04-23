@@ -5,11 +5,6 @@ import "./App.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import WinPopUp from "./WinPopUp";
-// adding images for tokens in grid
-import falcon1Tile from "./images/falcon1Tile.png";
-import falcon9Tile from "./images/falcon9Tile.png";
-import falconHeavyTile from "./images/falconHeavyTile.png";
-import starshipTile from "./images/starshipTile.png";
 
 function GameBoard({ data, localToken }) {
   // initializing stateful variables for the player Grids.
@@ -195,17 +190,11 @@ function GameBoard({ data, localToken }) {
                         // these ternary operators ensure that the grid displays hit and miss markers, as well as rocket markers based on the rocket selections the user made.
                         const cellValue =
                           value === 0 ? null 
-                          : value === "Falcon 1" ? (
-                            <img src={falcon1Tile} alt="Falcon 1 rocket"></img>
-                          ) : value === "Falcon 9" ? (
-                            <img src={falcon9Tile} alt="Falcon 9 rocket"></img>
-                          ) : value === "Falcon Heavy" ? (
-                            <img src={falconHeavyTile} alt="Falcon Heavy rocket"></img>
-                          ) : value === "Starship" ? (
-                            <img src={starshipTile} alt="Starship rocket"></img>
-                          ) : (
-                            value
-                          );
+                          : value === "Falcon 1" ? "🚀" 
+                          : value === "Falcon 9" ? "🚀"
+                          : value === "Falcon Heavy" ? "🚀"
+                          : value === "Starship" ? "🚀"
+                          : value;
                         return (
                           <button key={index} value={boardPlayerOne[index]}>
                             {cellValue}
@@ -271,17 +260,11 @@ function GameBoard({ data, localToken }) {
                         // these ternary operators ensure that the grid displays hit and miss markers, as well as rocket markers based on the rocket selections the user made.
                         const cellValue =
                         value === 0 ? null 
-                        : value === "Falcon 1" ? (
-                          <img src={falcon1Tile} alt="Falcon 1 rocket"></img>
-                        ) : value === "Falcon 9" ? (
-                          <img src={falcon9Tile} alt="Falcon 9 rocket"></img>
-                        ) : value === "Falcon Heavy" ? (
-                          <img src={falconHeavyTile} alt="Falcon Heavy rocket"></img>
-                        ) : value === "Starship" ? (
-                          <img src={starshipTile} alt="Starship rocket"></img>
-                        ) : (
-                          value
-                        );
+                          : value === "Falcon 1" ? "🚀" 
+                          : value === "Falcon 9" ? "🚀"
+                          : value === "Falcon Heavy" ? "🚀"
+                          : value === "Starship" ? "🚀"
+                          : value;
                         return (
                           <button key={index} value={boardPlayerTwo[index]}>
                             {cellValue}
