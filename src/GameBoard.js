@@ -17,8 +17,6 @@ function GameBoard({ data, localToken }) {
   const [boardPlayerTwo, setBoardPlayerTwo] = useState(data.playerTwo.grid);
   const [whichPlayer, setWhichPlayer] = useState("playerOne");
   const [userName, setUserName] = useState("");
-  const [status, setStatus] = useState(`${data.playerOne.name}'s turn`)
-  const [winner, setWinner] = useState('')
 
 
   //determine which player in order to submit the rocket selection to the appropriate branch in firebase
@@ -46,7 +44,6 @@ function GameBoard({ data, localToken }) {
 
   // game logic is handled inside this function that is triggered when the user clicks on any square.
   const handleClick = (event, index, player) => {
-    let status;
     // this checks in firebase to see if the game is over. If not, it continues through the function.
     if (!data.isGameOver) {
       // this makes a connection to the database for whomever is the current player.
@@ -60,6 +57,7 @@ function GameBoard({ data, localToken }) {
       if (cell === "💥" || cell === "🟡") {
         // if the user clicks an empty cell, the conditions below are run.
       } else {
+        let status;
         // values not occupied by a ship in the array are denoted with a 0, which is a miss.
         if (cell === "0") {
           boardCopy[index] = "🟡";
@@ -76,14 +74,14 @@ function GameBoard({ data, localToken }) {
           score: score,
         };
         dbRef.update(turnResult);
+        const turnRef = firebase.database().ref();
+        const update = {};
+        update.turn = player;
+        update.status = status;
+        turnRef.update(update);
       }
     }
     // this determines who will take the next turn, and updates that in firebase
-    const dbRef = firebase.database().ref();
-    const update = {};
-    update.turn = player;
-    update.status = status;
-    dbRef.update(update);
   };
 
   // this useEffect opens a listener to firebase, and updates the state of the player grids when the array grids are updated in firebase
@@ -92,7 +90,6 @@ function GameBoard({ data, localToken }) {
     dbRef.on("value", (response) => {
       setBoardPlayerOne(response.val().playerOne.grid);
       setBoardPlayerTwo(response.val().playerTwo.grid);
-      setStatus(response.val().status)
       // THIS IS WHEN A WINNER IS FOUND
 
       let winner;

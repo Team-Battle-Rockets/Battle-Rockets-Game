@@ -655,6 +655,13 @@ div.flex:nth-child(2) > div:nth-child(3) {
     top: 43px;
   }
 }
+
+@media(max-width: 395px){
+  .navbarSection h1 {
+    font-size: 2.6rem;
+  }
+}
+
 @media (max-width: 360px) {
   .textDiv p {
     font-size: 14px;
@@ -684,6 +691,10 @@ div.flex:nth-child(2) > div:nth-child(3) {
   }
   .submitButton {
     font-size: 13px;
+  }
+  .starAbortContainer{
+    top: 10px;
+    right: 10px;
   }
 }
 @media (max-width: 320px) {
@@ -739,6 +750,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
   font-family: var(--fontBody);
   font-size: 1.5rem;
   color: var(--yellow);
+  padding-top: 20px;
 }
 .whosBoardText {
   padding-top: 10px;
@@ -771,7 +783,7 @@ div.flex:nth-child(2) > div:nth-child(3) {
 
 .winPop {
   position: absolute;
-  padding: 30px;
+  padding: 50px 30px;
   width: 80%;
   left: 50%;
   top: 50%;
@@ -779,11 +791,22 @@ div.flex:nth-child(2) > div:nth-child(3) {
   transform: translate(-50%, -50%);
   border-radius: 5px;
 }
+@media(max-width: 868px){
+  .whosBoardText {
+    font-size: 0.8rem;
+  }
+}
 
 @media (max-width: 840px) {
   .container {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media(max-width: 410px){
+  .winPop{
+    width: 95%;
   }
 }
 
