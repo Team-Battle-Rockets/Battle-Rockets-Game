@@ -6,6 +6,13 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import WinPopUp from "./WinPopUp";
 
+import falcon1 from "./images/falcon1.svg";
+import falcon9 from "./images/falcon9.svg";
+import falconHeavy from "./images/falconHeavy.svg";
+import starship from "./images/starship.svg";
+import hit from "./images/hit.svg";
+import miss from "./images/miss.svg";
+
 function GameBoard({ data, localToken }) {
   // initializing stateful variables for the player Grids.
   const [boardPlayerOne, setBoardPlayerOne] = useState(data.playerOne.grid);
@@ -13,6 +20,14 @@ function GameBoard({ data, localToken }) {
   const [whichPlayer, setWhichPlayer] = useState("playerOne");
   const [userName, setUserName] = useState("");
   const history = useHistory();
+  const buttonBackground = {
+    falcon1 : `url(${falcon1})`,
+    falcon9 : `url(${falcon9})`,
+    falconHeavy : `url(${falconHeavy})`,
+    starship : `url(${starship})`,
+    hit : `url(${hit})`,
+    miss : `url(${miss})`,
+  }
 
   //determine which player in order to submit the rocket selection to the appropriate branch in firebase
   //also capture user name to display on screen
@@ -152,17 +167,16 @@ function GameBoard({ data, localToken }) {
                         const cellValue =
                           value === 0
                             ? null
-                            : value === "Falcon 1"
-                            ? null
-                            : value === "Falcon 9"
-                            ? null
-                            : value === "Falcon Heavy"
-                            ? null
-                            : value === "Starship"
-                            ? null
+                            : value === "Falcon 1" ? null
+                            : value === "Falcon 9" ? null
+                            : value === "Falcon Heavy" ? null
+                            : value === "Starship" ? null
+                            : value === "💥" ? buttonBackground.hit
+                            : value === "🟡" ? buttonBackground.miss
                             : value;
                         return (
                           <button
+                            style={{backgroundImage: cellValue}}
                             key={index}
                             onClick={
                               data.turn === "playerOne"
@@ -172,7 +186,7 @@ function GameBoard({ data, localToken }) {
                             }
                             value={boardPlayerTwo[index]}
                           >
-                            {cellValue}
+
                           </button>
                         );
                       })}
@@ -190,14 +204,15 @@ function GameBoard({ data, localToken }) {
                         // these ternary operators ensure that the grid displays hit and miss markers, as well as rocket markers based on the rocket selections the user made.
                         const cellValue =
                           value === 0 ? null 
-                          : value === "Falcon 1" ? "🚀" 
-                          : value === "Falcon 9" ? "🚀"
-                          : value === "Falcon Heavy" ? "🚀"
-                          : value === "Starship" ? "🚀"
+                          : value === "Falcon 1" ? buttonBackground.falcon1 
+                          : value === "Falcon 9" ? buttonBackground.falcon9
+                          : value === "Falcon Heavy" ? buttonBackground.falconHeavy
+                          : value === "Starship" ? buttonBackground.starship
+                          : value === "💥" ? buttonBackground.hit
+                          : value === "🟡" ? buttonBackground.miss
                           : value;
                         return (
-                          <button key={index} value={boardPlayerOne[index]}>
-                            {cellValue}
+                          <button style={{backgroundImage: cellValue}} key={index} value={boardPlayerOne[index]}>
                           </button>
                         );
                       })}
@@ -222,17 +237,16 @@ function GameBoard({ data, localToken }) {
                         const cellValue =
                           value === 0
                             ? null
-                            : value === "Falcon 1"
-                            ? null
-                            : value === "Falcon 9"
-                            ? null
-                            : value === "Falcon Heavy"
-                            ? null
-                            : value === "Starship"
-                            ? null
+                            : value === "Falcon 1" ? null
+                            : value === "Falcon 9" ? null
+                            : value === "Falcon Heavy" ? null
+                            : value === "Starship" ? null
+                            : value === "💥" ? buttonBackground.hit
+                            : value === "🟡" ? buttonBackground.miss
                             : value;
                         return (
                           <button
+                            style={{backgroundImage: cellValue}}
                             key={index}
                             onClick={
                               data.turn === "playerTwo"
@@ -242,7 +256,6 @@ function GameBoard({ data, localToken }) {
                             }
                             value={boardPlayerOne[index]}
                           >
-                            {cellValue}
                           </button>
                         );
                       })}
@@ -259,15 +272,16 @@ function GameBoard({ data, localToken }) {
                       {boardPlayerTwo.map((value, index) => {
                         // these ternary operators ensure that the grid displays hit and miss markers, as well as rocket markers based on the rocket selections the user made.
                         const cellValue =
-                        value === 0 ? null 
-                          : value === "Falcon 1" ? "🚀" 
-                          : value === "Falcon 9" ? "🚀"
-                          : value === "Falcon Heavy" ? "🚀"
-                          : value === "Starship" ? "🚀"
+                          value === 0 ? null 
+                          : value === "Falcon 1" ? buttonBackground.falcon1 
+                          : value === "Falcon 9" ? buttonBackground.falcon9
+                          : value === "Falcon Heavy" ? buttonBackground.falconHeavy
+                          : value === "Starship" ? buttonBackground.starship
+                          : value === "💥" ? buttonBackground.hit
+                          : value === "🟡" ? buttonBackground.miss
                           : value;
                         return (
-                          <button key={index} value={boardPlayerTwo[index]}>
-                            {cellValue}
+                          <button style={{backgroundImage: cellValue}} key={index} value={boardPlayerOne[index]}>
                           </button>
                         );
                       })}
